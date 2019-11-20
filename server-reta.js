@@ -19,8 +19,8 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/api/places', ( req, res, next ) => {
-    console.log("Getting places in Server");
+app.get('/api/allRetas', ( req, res, next ) => {
+    console.log("Getting retas in Server");
 	PlaceList.get()
 		.then( retas => {
 			return res.status( 200 ).json( retas );

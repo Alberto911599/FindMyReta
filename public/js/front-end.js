@@ -1,4 +1,4 @@
-// let url = 'https://fierce-mountain-90125.herokuapp.com/api';
+let url = 'https://vast-forest-34191.herokuapp.com/api';
 
 function clearFields(){
     $("#locationInput").val('');
@@ -10,7 +10,7 @@ function clearFields(){
 
 function init(){
     console.log("initialized")
-    // getAllBlogs();
+    getAllRetas();
     $("#btnAddPlace").on("click", function(e){
         e.preventDefault();
         console.log("add place");
@@ -50,31 +50,31 @@ function init(){
     });
 }
 
-// function getAllBlogs(){
-//     $.ajax({
-//         url:(url + "/blog-posts"), //url/endpointToAPI,
-//         method: "GET", 
-//         data: {}, //Info sent to the API
-//         dataType : "json", //Returned type od the response
-//         ContentType : "application/json", //Type of sent data in the request (optional)
-//         success : function(responseJSON){
-//             console.log("success");
-//             $(".listOfBlogs").empty();
-//             for(let i = 0; i < responseJSON.length; i++){
-//                 $(".listOfBlogs").append(`<li>  <p>id = ${responseJSON[i].id}</p>
-//                                                 <p>author = ${responseJSON[i].author}</p>
-//                                                 <p>title = ${responseJSON[i].title}</p>
-//                                                 <p>content = ${responseJSON[i].content}</p> 
-//                                                 <p>publishingDate = ${responseJSON[i].publishDate}</p>
-//                                           </li>`);
-//             }
-//             clearFields();
-//         }, 
-//         error: function(err){
-//             console.log("error");
-//         }
-//     });
-// }
+function getAllRetas(){
+    $.ajax({
+        url:(url + "/allRetas"), //url/endpointToAPI,
+        method: "GET", 
+        data: {}, //Info sent to the API
+        dataType : "json", //Returned type od the response
+        ContentType : "application/json", //Type of sent data in the request (optional)
+        success : function(responseJSON){
+            console.log("Success on getting all retas");
+            $(".listOfRetas").empty();
+            for(let i = 0; i < responseJSON.length; i++){
+                $(".listOfRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
+                                                <p>sports = ${responseJSON[i].typeOfSports}</p>
+                                                <p>cost = ${responseJSON[i].cost}</p>
+                                                <p>image = ${responseJSON[i].image}</p> 
+                                                <p>nowPlaying = ${responseJSON[i].nowPlaying}</p>
+                                          </li>`);
+            }
+            clearFields();
+        }, 
+        error: function(err){
+            console.log("error");
+        }
+    });
+}
 
 // function getBlogsByAuthor(author){
 //     $.ajax({
