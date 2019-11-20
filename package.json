@@ -4,7 +4,7 @@
   "description": "Web Final Project",
   "main": "server-reta.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server-reta.js"
   },
   "repository": {
     "type": "git",
