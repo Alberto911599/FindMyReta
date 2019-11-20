@@ -102,22 +102,22 @@ function getAllRetas(){
 //     });
 // }
 
-// function postNewBlog(newBlog){
-//     console.log(newBlog);
-//     $.ajax({
-//         url:(url + "/addPost"), //url/endpointToAPI,
-//         type: "POST", 
-//         data: JSON.stringify(newBlog),
-//         contentType: "application/json; charset=utf-8",
-//         success : function(result){
-//             getAllBlogs();
-//         },
-//         error : function(err){
-//             console.log(err);
-//             console.log("error");
-//         }
-//     });
-// }
+function postNewPlace(newPlace){
+    console.log(newPlace);
+    $.ajax({
+        url:(url + "/postPlace"), //url/endpointToAPI,
+        type: "POST", 
+        data: JSON.stringify(newPlace),
+        contentType: "application/json; charset=utf-8",
+        success : function(result){
+            console.log("Success posting new place")
+            getAllRetas();
+        },
+        error : function(err){
+            console.log(err);
+        }
+    });
+}
 
 // function deleteById(tempId){
 //     console.log(tempId);
