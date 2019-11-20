@@ -14,14 +14,14 @@ function init(){
     $("#btnAddPlace").on("click", function(e){
         e.preventDefault();
         console.log("add place");
-        // newPost = {
-        //     title : $("#tileInput").val(),
-        //     author :  $("#authorInput").val(),
-        //     content : $("#contentInput").val(),
-        //     publishDate : $("#publishDateInput").val(),
-        //     id : $("#idInput").val()
-        // };
-        // postNewBlog(newPost);
+        newPlace = {
+            location : $("#locationInput").val(),
+            typeOfSports :  $("#typeOfSportsInput").val(),
+            cost : $("#costInput").val(),
+            image :$("#imageInput").val(),
+            nowPlaying : $("#nowPlayingInput").val()
+        };
+        postNewPlace(newPlace);
     });
     $("#btnAddEvent").on("click", function(e){
         e.preventDefault();
