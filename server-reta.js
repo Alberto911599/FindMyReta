@@ -39,6 +39,7 @@ app.post('/api/postPlace', jsonParser, (req, res) => {
     let location = req.body.location;
     let typeOfSports = req.body.typeOfSports;
     let cost = req.body.cost;
+    let requisites = req.body.requisites;
     let image = req.body.image;
     let nowPlaying = req.body.nowPlaying;
     if(!location || !typeOfSports || !cost || !image){
@@ -52,6 +53,7 @@ app.post('/api/postPlace', jsonParser, (req, res) => {
          location,
          typeOfSports,
          cost,
+         requisites,
          image,
          nowPlaying
      };

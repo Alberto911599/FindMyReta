@@ -4,6 +4,7 @@ function clearFields(){
     $("#locationInput").val('');
     $("#typeOfSportsInput").val('');
     $("#costInput").val('');
+    $("#requisitesInput").val('');
     $("#imageInput").val('');
     $("#nowPlayingInput").val('');
 }
@@ -18,6 +19,7 @@ function init(){
             location : $("#locationInput").val(),
             typeOfSports :  $("#typeOfSportsInput").val(),
             cost : $("#costInput").val(),
+            requisites : $("#requisitesInput").val(),
             image :$("#imageInput").val(),
             nowPlaying : $("#nowPlayingInput").val()
         };
@@ -64,6 +66,7 @@ function getAllRetas(){
                 $(".listOfRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
                                                 <p>sports = ${responseJSON[i].typeOfSports}</p>
                                                 <p>cost = ${responseJSON[i].cost}</p>
+                                                <p>requisites = ${responseJSON[i].requisites}</p>
                                                 <p>image = ${responseJSON[i].image}</p> 
                                                 <p>nowPlaying = ${responseJSON[i].nowPlaying}</p>
                                           </li>`);

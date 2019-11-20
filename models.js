@@ -6,6 +6,7 @@ let placeSchema = mongoose.Schema({
     typeOfSports : {type : String},
     cost : {type : String},
     image : {type : String},
+    requisites : {tye : String},
     nowPlaying : {type : String}
 });
 
