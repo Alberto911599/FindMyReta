@@ -99,8 +99,8 @@ function getAllRetas(){
                                                 <p>sports = ${responseJSON[i].typeOfSports}</p>
                                                 <p>cost = ${responseJSON[i].cost}</p>
                                                 <p>requisites = ${responseJSON[i].requisites}</p>
-                                                <p>image = ${responseJSON[i].image}</p> 
                                                 <p>nowPlaying = ${responseJSON[i].nowPlaying}</p>
+                                                <img src= "${responseJSON[i].imageURL}">
                                           </li>`);
             }
             clearFields();
