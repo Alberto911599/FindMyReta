@@ -79,7 +79,7 @@ app.post('/api/postPlace', jsonParser, (req, res) => {
     let cost = req.body.cost;
     let requisites = req.body.requisites;
     let nowPlaying = req.body.nowPlaying;
-    let image = req.body.imageURL;
+    let imageURL = req.body.imageURL;
     console.log(location);
     console.log(typeOfSports);
     console.log(cost);
@@ -95,7 +95,7 @@ app.post('/api/postPlace', jsonParser, (req, res) => {
          typeOfSports,
          cost,
          requisites,
-         image,
+         imageURL,
          nowPlaying
      };
      PlaceList.post(newPlace)
