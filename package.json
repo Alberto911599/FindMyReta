@@ -4,7 +4,8 @@
   "description": "Web Final Project",
   "main": "server-reta.js",
   "scripts": {
-    "start": "node server-reta.js"
+    "start": "node server-reta.js",
+    "dev": "nodemon server-reta.js"
   },
   "repository": {
     "type": "git",
@@ -22,9 +23,16 @@
   },
   "homepage": "https://github.com/Alberto911599/FindMyReta#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "gridfs-stream": "^1.1.1",
     "mongoose": "^5.7.12",
     "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "multer-gridfs-storage": "^4.0.1"
+  },
+  "devDependencies": {
     "nodemon": "^1.19.4"
   }
 }

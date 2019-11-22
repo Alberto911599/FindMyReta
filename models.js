@@ -5,9 +5,9 @@ let placeSchema = mongoose.Schema({
     location : {type : String},
     typeOfSports : {type : String},
     cost : {type : String},
-    image : {type : String},
     requisites : {type : String},
-    nowPlaying : {type : String}
+    nowPlaying : {type : String},
+    image: { type : String }
 });
 
 let Place = mongoose.model('Reta', placeSchema);

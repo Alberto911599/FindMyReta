@@ -1,5 +1,22 @@
 let url = 'https://vast-forest-34191.herokuapp.com/api';
 
+let imageURL;
+let typeOfSports;
+let cost;
+let requisites;
+let nowPlaying;
+let address;
+
+function encodeImageFileAsURL(element) {
+    let file = element.files[0];
+    let reader = new FileReader();
+    reader.onloadend = function() {
+      imageURL = reader.result;
+      console.log(imageURL);
+    }
+    reader.readAsDataURL(file);
+  }
+
 function clearFields(){
     $("#locationInput").val('');
     $("#typeOfSportsInput").val('');
@@ -9,22 +26,42 @@ function clearFields(){
     $("#nowPlayingInput").val('');
 }
 
-function init(){
-    console.log("initialized")
-    getAllRetas();
+function getInputValues(){
+    address = $("#locationInput").val();
+    typeOfSports =  $("#typeOfSportsInput").val();
+    cost = $("#costInput").val();
+    requisites = $("#requisitesInput").val();
+    nowPlaying = $("#nowPlayingInput").val();
+}
+
+function addPlaceCL(){
     $("#btnAddPlace").on("click", function(e){
         e.preventDefault();
-        console.log("add place");
+        getInputValues();
         newPlace = {
-            location : $("#locationInput").val(),
-            typeOfSports :  $("#typeOfSportsInput").val(),
-            cost : $("#costInput").val(),
-            requisites : $("#requisitesInput").val(),
-            image :$("#imageInput").val(),
-            nowPlaying : $("#nowPlayingInput").val()
+            address,
+            typeOfSports,
+            cost,
+            requisites,
+            imageURL,
+            nowPlaying
         };
         postNewPlace(newPlace);
     });
+}
+
+function loadAllCL(){
+    $("#btnLoadAll").on("click", function(e){
+        e.preventDefault();
+        console.log("Load All");
+        getAllBlogs();
+    });
+}
+
+function init(){
+    addPlaceCL();
+    getAllRetas();
+    loadAllCL();
     $("#btnAddEvent").on("click", function(e){
         e.preventDefault();
         console.log("add event");
@@ -45,11 +82,6 @@ function init(){
     //     e.preventDefault();
     //     deleteById($("#idDelete").val());
     // });
-    $("#btnLoadAll").on("click", function(e){
-        e.preventDefault();
-        console.log("Load All");
-        // getAllBlogs();
-    });
 }
 
 function getAllRetas(){
