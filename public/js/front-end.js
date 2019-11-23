@@ -153,7 +153,7 @@ function getAllRetas(){
             console.log("Success on getting all retas");
             $(".listOfRetas").empty();
             for(let i = 0; i < responseJSON.length; i++){
-                $(".listOfRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
+                $("#listOfRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
                                                 <p>sports = ${responseJSON[i].typeOfSports}</p>
                                                 <p>cost = ${responseJSON[i].cost}</p>
                                                 <p>requisites = ${responseJSON[i].requisites}</p>
@@ -181,7 +181,7 @@ function getMyRetas(){
             $(".listMyRetas").empty();
             for(let i = 0; i < responseJSON.length; i++){
                 console.log(responseJSON[i]);
-                $(".listMyRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
+                $("#listMyRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
                                                 <p>sports = ${responseJSON[i].typeOfSports}</p>
                                                 <p>cost = ${responseJSON[i].cost}</p>
                                                 <p>requisites = ${responseJSON[i].requisites}</p>
@@ -214,7 +214,7 @@ function getUser(username, password){
                 hideSections();
                 $(".homeSection").show();
                 $(".allRetasSection").show();
-                
+                getAllRetas();
             }
             clearFields();
 
