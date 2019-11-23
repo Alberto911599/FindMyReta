@@ -122,8 +122,11 @@ function showAllRetasCL(){
 
 function init(){
     addPlaceCL();
+    addNewRetaCL();
     loadAllCL();
     loginCL();
+    showMyRetasCL();
+    showAllRetasCL();
     $(".homeSection").hide();
     $(".loginSection").show();
 }
