@@ -35,13 +35,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" id="linkAllRetas" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">MyRetas</a>
+                        <a class="nav-link" id="linkMyRetas" href="#">MyRetas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Add Reta</a>
+                        <a class="nav-link" id = "linkAddReta" href="#">Add Reta</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -112,6 +112,12 @@
                 <ul class="listOfRetas"></ul>
                 <button id="btnLoadAll">LoadAll</button>
             </section>
+
+            <section class="myRetasSection">    
+                <ul id="listMyRetas" ></ul>
+                <button id="btnLoadAll">LoadAll</button>
+            </section>
+
         </section>
 
     </main>

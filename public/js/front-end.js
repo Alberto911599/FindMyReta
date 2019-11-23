@@ -40,6 +40,7 @@ function hideSections(){
     $(".addEventSection").hide();
     $(".loginSection").hide();
     $(".allRetasSection").hide();
+    $(".myRetasSection").hide();
 }
 
 function clearFields(){
@@ -89,6 +90,33 @@ function loadAllCL(){
         e.preventDefault();
         console.log("Load All");
         getAllBlogs();
+    });
+}
+
+function addNewRetaCL(){
+    $('#linkAddReta').on("click", function(e){
+        e.preventDefault();
+        hideSections();
+        $(".addPlaceSection").show();
+        console.log("Add Reta");
+    });
+}
+
+function showMyRetasCL(){
+    $('#linkMyRetas').on("click", function(e){
+        e.preventDefault();
+        hideSections();
+        $(".myRetasSection").show();
+        console.log("These are my retas");
+    });
+}
+
+function showAllRetasCL(){
+    $('#linkAllRetas').on("click", function(e){
+        e.preventDefault();
+        hideSections();
+        $(".allRetasSection").show();
+        console.log("These are my retas");
     });
 }
 
