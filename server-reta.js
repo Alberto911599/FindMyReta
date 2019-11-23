@@ -79,7 +79,8 @@ app.post('/api/postPlace', jsonParser, (req, res) => {
     let cost = req.body.cost;
     let requisites = req.body.requisites;
     let nowPlaying = req.body.nowPlaying;
-    let imageURL = req.body.imageURL;   
+    let imageURL = req.body.imageURL;  
+    let username = req.body.username; 
     if(!location || !typeOfSports || !cost){
         res.statusMessage = "Missing field in place form";
         return res.status(406).json({

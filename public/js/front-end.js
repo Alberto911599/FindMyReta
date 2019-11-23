@@ -70,7 +70,8 @@ function addPlaceCL(){
             cost,
             requisites,
             imageURL,
-            nowPlaying
+            nowPlaying,
+            currentUser
         };
         postNewPlace(newPlace);
     });
