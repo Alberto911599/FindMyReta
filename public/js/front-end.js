@@ -96,7 +96,6 @@ function init(){
     addPlaceCL();
     loadAllCL();
     loginCL();
-    getAllRetas();
     $(".allRetasSection").show();
 }
 
