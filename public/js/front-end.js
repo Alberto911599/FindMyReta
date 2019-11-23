@@ -9,6 +9,7 @@ let address;
 let WIDTH = 200;
 let HEIGHT = 150;
 let encoderOptions = 0.7;
+let currentUser = NULL;
 
 function downscaleImage(image) {
     // Create a temporary canvas to draw the downscaled image on.
@@ -32,7 +33,14 @@ function encodeImageFileAsURL(element) {
         }
     }
     reader.readAsDataURL(file);
-  }
+}
+
+function hideSections(){
+    $(".addPlaceSection").hide();
+    $(".addEventSection").hide();
+    $(".loginSection").hide();
+    $(".allRetasSection").hide();
+}
 
 function clearFields(){
     $("#locationInput").val('');
@@ -87,8 +95,9 @@ function loadAllCL(){
 function init(){
     addPlaceCL();
     loadAllCL();
-    getAllRetas();
     loginCL();
+    getAllRetas();
+    $(".allRetasSection").show();
 }
 
 function getAllRetas(){
@@ -131,7 +140,9 @@ function getUser(username, password){
                 console.log("User was not found")
             }
             else{
-                console.log("User found");
+                currentUser = responseJSON.username;
+                hideSections();
+                $(".allRetasSection").show();
             }
             clearFields();
 

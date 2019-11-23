@@ -4,80 +4,95 @@
 	<title>FindMyReta</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 m-auto">
-                <h1 class="text-center display-4 my-4">FindMyReta</h1>
-                <form action="/api/uploadImage" method="POST" enctype="multipart/form-data">
-                    <div class="custom-file mb-3">
-                        <input type="file" name="file" id="file" class="custom-file-input" onchange="encodeImageFileAsURL(this)"/>
-                        <label for="file" class="custom-file-label">Choose File</label>
+    <main>
+        
+        <section id="addPlaceSection" hidden>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 m-auto">
+                        <h1 class="text-center display-4 my-4">FindMyReta</h1>
+                        <form enctype="multipart/form-data">
+                            <div class="custom-file mb-3">
+                                <input type="file" name="file" id="file" class="custom-file-input" onchange="encodeImageFileAsURL(this)"/>
+                                <label for="file" class="custom-file-label">Choose File</label>
+                            </div>
+                        </form>
                     </div>
-                        <input type="submit" value="Submit" class="btn btn-primary btn-block">
-                </form>
-            </div>
-        </div>
-    </div>
+                </div>
+            </div>        
+            <form>
+                <label>
+                    Add a place
+                </label>
+                <input id="locationInput" class="textInput" type="text" placeholder="Location">
+                <input id="typeOfSportsInput" class="textInput" type="text" placeholder="Sports">
+                <input id="costInput" class="textInput" type="text" placeholder="costs">
+                <input id="requisitesInput" class="textInput" type="text" placeholder="requisites">
+                <input id="imageInput" class="textInput" type="text" placeholder="image">
+                <input id="nowPlayingInput" class="textInput" type="text" placeholder="Now Playing">
+                <button id="btnAddPlace" type="button">
+                    Add Place
+                </button>
+            </form>
+        </section>
 
-    <form>
-        <label>
-          Add a place
-        </label>
-        <input id="locationInput" class="textInput" type="text" placeholder="Location">
-        <input id="typeOfSportsInput" class="textInput" type="text" placeholder="Sports">
-        <input id="costInput" class="textInput" type="text" placeholder="costs">
-        <input id="requisitesInput" class="textInput" type="text" placeholder="requisites">
-        <input id="imageInput" class="textInput" type="text" placeholder="image">
-        <input id="nowPlayingInput" class="textInput" type="text" placeholder="Now Playing">
-        <button id="btnAddPlace" type="button">
-            Add
-        </button>
-    </form>
+        <section id="addEventSection" hidden>        
+            <form>
+                <label>
+                    Add event
+                </label>
+                <input id="placeInput" class="textInput" type="text" placeholder="Place">
+                <input id="typeOfGameInput" class="textInput" type="text" placeholder="Type of game">
+                <input id="assistantsInput" class="textInput" type="text" placeholder="Assistants">
+                <input id="rulesInput" class="textInput" type="text" placeholder="Rules">
+                <input id="descriptionInput" class="textInput" type="text" placeholder="description">
+                <input id="startTimeInput" class="textInput" type="text" placeholder="start time">
+                <input id="endTimeInput" class="textInput" type="text" placeholder="end time">
+                <button id="btnAddEvent" type="button">
+                    Add
+                </button>
+            </form>
+        </section>
+        
+        <section id="loginSection" class="currentSelected">
+            <form>
+                <label>
+                    Login
+                </label>
+                <input id="usernameInput" class="textInput" type="text" placeholder="Username">
+                <input id="passwordInput" class="textInput" type="text" placeholder="Password">
+                <button id="btnLogin" type="button">
+                    Login
+                </button>
+            </form>
+        </section>
 
-    <form>
-        <label>
-            Add event
-        </label>
-        <input id="placeInput" class="textInput" type="text" placeholder="Place">
-        <input id="typeOfGameInput" class="textInput" type="text" placeholder="Type of game">
-        <input id="assistantsInput" class="textInput" type="text" placeholder="Assistants">
-        <input id="rulesInput" class="textInput" type="text" placeholder="Rules">
-        <input id="descriptionInput" class="textInput" type="text" placeholder="description">
-        <input id="startTimeInput" class="textInput" type="text" placeholder="start time">
-        <input id="endTimeInput" class="textInput" type="text" placeholder="end time">
-        <button id="btnAddEvent" type="button">
-            Add
-        </button>
-    </form>
+        <section id="allRetasSection" hidden>    
+            <ul class="listOfRetas"></ul>
+            <button id="btnLoadAll">LoadAll</button>
+        </section>
 
-    <form>
-        <label>
-            Login
-        </label>
-        <input id="usernameInput" class="textInput" type="text" placeholder="Username">
-        <input id="passwordInput" class="textInput" type="text" placeholder="Password">
-        <button id="btnLogin" type="button">
-            Login
-        </button>
-    </form>
-
-    <ul class="listOfRetas"></ul>
-
-    <button id="btnLoadAll">LoadAll</button>
-
-    <img>
+    </main>
 
     <script
         src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous">
     </script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+        crossorigin="anonymous">
+    </script>
+    <script 
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+        crossorigin="anonymous">
+    </script>
     <script src = "js/front-end.js"></script>
 </body>
 </html>
