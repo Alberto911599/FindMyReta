@@ -108,6 +108,7 @@ function showMyRetasCL(){
         e.preventDefault();
         hideSections();
         $(".myRetasSection").show();
+        getMyRetas();
         console.log("These are my retas");
     });
 }
@@ -144,6 +145,33 @@ function getAllRetas(){
             $(".listOfRetas").empty();
             for(let i = 0; i < responseJSON.length; i++){
                 $(".listOfRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
+                                                <p>sports = ${responseJSON[i].typeOfSports}</p>
+                                                <p>cost = ${responseJSON[i].cost}</p>
+                                                <p>requisites = ${responseJSON[i].requisites}</p>
+                                                <p>nowPlaying = ${responseJSON[i].nowPlaying}</p>
+                                                <img src= "${responseJSON[i].imageURL}">
+                                          </li>`);
+            }
+            clearFields();
+        }, 
+        error: function(err){
+            console.log("error");
+        }
+    });
+}
+
+function getMyRetas(){
+    $.ajax({
+        url:(url + "/myRetas/" + currentUser), //url/endpointToAPI,
+        method: "GET", 
+        data: {}, //Info sent to the API
+        dataType : "json", //Returned type od the response
+        ContentType : "application/json", //Type of sent data in the request (optional)
+        success : function(responseJSON){
+            console.log("Success on getting all retas");
+            $(".listOfRetas").empty();
+            for(let i = 0; i < responseJSON.length; i++){
+                $(".listMyRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
                                                 <p>sports = ${responseJSON[i].typeOfSports}</p>
                                                 <p>cost = ${responseJSON[i].cost}</p>
                                                 <p>requisites = ${responseJSON[i].requisites}</p>

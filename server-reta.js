@@ -2,30 +2,14 @@ let express = require ('express');
 let morgan = require ('morgan');
 let bodyParser = require( "body-parser" );
 let mongoose = require('mongoose');
-// let multer = require("multer");
-// let GridFsStorage = require("multer-gridfs-storage");
-// let Grid = require("gridfs-stream");
-// let crypto = require("crypto");
-// let path = require('path');
 let app = express();
 let jsonParser = bodyParser.json();
 let {PlaceList, UserList} = require('./models');
 let {DATABASE_URL, PORT} = require('./config');
-// let mongoURI = "mongodb+srv://root:root@cluster0-znoye.mongodb.net/RetasDB?retryWrites=true&w=majority";
 
 app.use(express.static('public'));
 app.use( morgan( 'dev' ) );
 mongoose.Promise = global.Promise;
-
-
-// let conn = mongoose.createConnection(mongoURI);
-// let gfs;
-
-// conn.once('open', () => {
-//     gfs = Grid(conn.db, mongoose.mongo);
-//     gfs.collection("retas");
-//     console.log("Connection Successful");
-// });
 
 
 app.use(function(req, res, next) {
@@ -34,32 +18,26 @@ app.use(function(req, res, next) {
     next();
 });
 
-// Create storage engine
-// const storage = new GridFsStorage({
-//     url: mongoURI,
-//     file: (req, file) => {
-//       return new Promise((resolve, reject) => {
-//         crypto.randomBytes(16, (err, buf) => {
-//           if (err) {
-//             return reject(err);
-//           }
-//           const filename = buf.toString('hex') + path.extname(file.originalname);
-//           const fileInfo = {
-//             filename: filename,
-//             bucketName: "retas"
-//           };
-//           resolve(fileInfo);
-//         });
-//       });
-//     }
-//   });
-  
-// const upload = multer({ storage });
-
 
 app.get('/api/allRetas', ( req, res, next ) => {
     console.log("Getting retas in Server");
 	PlaceList.get()
+		.then( retas => {
+			return res.status( 200 ).json( retas );
+		})
+		.catch( error => {
+			res.statusMessage = "Something went wrong with the DB. Try again later.";
+			return res.status( 500 ).json({
+				status : 500,
+				message : "Something went wrong with the DB. Try again later."
+			})
+		});
+});
+
+app.get('/api/myRetas/:username', ( req, res, next ) => {
+    console.log("Getting my retas in Server");
+    let filter = {username : req.params.username};
+	PlaceList.getMyRetas(filter)
 		.then( retas => {
 			return res.status( 200 ).json( retas );
 		})
@@ -80,7 +58,7 @@ app.post('/api/postPlace', jsonParser, (req, res) => {
     let requisites = req.body.requisites;
     let nowPlaying = req.body.nowPlaying;
     let imageURL = req.body.imageURL;  
-    let username = req.body.username; 
+    let username = req.body.currentUser; 
     if(!location || !typeOfSports || !cost){
         res.statusMessage = "Missing field in place form";
         return res.status(406).json({
@@ -183,21 +161,21 @@ let server;
 
 function runServer(port, databaseUrl){
     return new Promise( (resolve, reject ) => {
-    mongoose.connect(databaseUrl, response => {
-    if ( response ){
-        return reject(response);
-    }
-    else{
-        server = app.listen(port, () => {
-        console.log( "App is running on port " + port );
-        resolve();
-    })
-        .on( 'error', err => {
-        mongoose.disconnect();
-        return reject(err);
-    })
-    }
-    });
+        mongoose.connect(databaseUrl, response => {
+        if ( response ){
+            return reject(response);
+        }
+        else{
+            server = app.listen(port, () => {
+            console.log( "App is running on port " + port );
+            resolve();
+        })
+            .on( 'error', err => {
+                mongoose.disconnect();
+                return reject(err);
+            })
+        }
+        });
     });
 }
    

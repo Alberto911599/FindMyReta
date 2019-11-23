@@ -44,7 +44,17 @@ let PlaceList = {
 				.catch( error => {
 					throw Error( error );
 				});
-	},
+    },
+    getMyRetas : function(filter){
+        console.log("Getting my retas");
+        return Place.find(filter)
+            .then( places => {
+                return places;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
     post : function(newPlace){
         console.log("Place Post");
         return Place.create(newPlace)
