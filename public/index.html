@@ -10,54 +10,6 @@
 
     <main>
         
-        <section class="addPlaceSection" >
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 m-auto">
-                        <h1 class="text-center display-4 my-4">FindMyReta</h1>
-                        <form enctype="multipart/form-data">
-                            <div class="custom-file mb-3">
-                                <input type="file" name="file" id="file" class="custom-file-input" onchange="encodeImageFileAsURL(this)"/>
-                                <label for="file" class="custom-file-label">Choose File</label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>        
-            <form>
-                <label>
-                    Add a place
-                </label>
-                <input id="locationInput" class="textInput" type="text" placeholder="Location">
-                <input id="typeOfSportsInput" class="textInput" type="text" placeholder="Sports">
-                <input id="costInput" class="textInput" type="text" placeholder="costs">
-                <input id="requisitesInput" class="textInput" type="text" placeholder="requisites">
-                <input id="imageInput" class="textInput" type="text" placeholder="image">
-                <input id="nowPlayingInput" class="textInput" type="text" placeholder="Now Playing">
-                <button id="btnAddPlace" type="button">
-                    Add Place
-                </button>
-            </form>
-        </section>
-
-        <section class="addEventSection">        
-            <form>
-                <label>
-                    Add event
-                </label>
-                <input id="placeInput" class="textInput" type="text" placeholder="Place">
-                <input id="typeOfGameInput" class="textInput" type="text" placeholder="Type of game">
-                <input id="assistantsInput" class="textInput" type="text" placeholder="Assistants">
-                <input id="rulesInput" class="textInput" type="text" placeholder="Rules">
-                <input id="descriptionInput" class="textInput" type="text" placeholder="description">
-                <input id="startTimeInput" class="textInput" type="text" placeholder="start time">
-                <input id="endTimeInput" class="textInput" type="text" placeholder="end time">
-                <button id="btnAddEvent" type="button">
-                    Add
-                </button>
-            </form>
-        </section>
-        
         <section class="loginSection">
             <form>
                 <label>
@@ -71,9 +23,97 @@
             </form>
         </section>
 
-        <section class="allRetasSection">    
-            <ul class="listOfRetas"></ul>
-            <button id="btnLoadAll">LoadAll</button>
+
+        <section class="homeSection">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+
+            <section class="addPlaceSection" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 m-auto">
+                            <h1 class="text-center display-4 my-4">FindMyReta</h1>
+                            <form enctype="multipart/form-data">
+                                <div class="custom-file mb-3">
+                                    <input type="file" name="file" id="file" class="custom-file-input" onchange="encodeImageFileAsURL(this)"/>
+                                    <label for="file" class="custom-file-label">Choose File</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>        
+                <form>
+                    <label>
+                        Add a place
+                    </label>
+                    <input id="locationInput" class="textInput" type="text" placeholder="Location">
+                    <input id="typeOfSportsInput" class="textInput" type="text" placeholder="Sports">
+                    <input id="costInput" class="textInput" type="text" placeholder="costs">
+                    <input id="requisitesInput" class="textInput" type="text" placeholder="requisites">
+                    <input id="imageInput" class="textInput" type="text" placeholder="image">
+                    <input id="nowPlayingInput" class="textInput" type="text" placeholder="Now Playing">
+                    <button id="btnAddPlace" type="button">
+                        Add Place
+                    </button>
+                </form>
+            </section>
+
+            <section class="addEventSection">        
+                <form>
+                    <label>
+                        Add event
+                    </label>
+                    <input id="placeInput" class="textInput" type="text" placeholder="Place">
+                    <input id="typeOfGameInput" class="textInput" type="text" placeholder="Type of game">
+                    <input id="assistantsInput" class="textInput" type="text" placeholder="Assistants">
+                    <input id="rulesInput" class="textInput" type="text" placeholder="Rules">
+                    <input id="descriptionInput" class="textInput" type="text" placeholder="description">
+                    <input id="startTimeInput" class="textInput" type="text" placeholder="start time">
+                    <input id="endTimeInput" class="textInput" type="text" placeholder="end time">
+                    <button id="btnAddEvent" type="button">
+                        Add
+                    </button>
+                </form>
+            </section>
+
+            <section class="allRetasSection">    
+                <ul class="listOfRetas"></ul>
+                <button id="btnLoadAll">LoadAll</button>
+            </section>
         </section>
 
     </main>

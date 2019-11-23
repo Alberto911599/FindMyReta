@@ -96,7 +96,8 @@ function init(){
     addPlaceCL();
     loadAllCL();
     loginCL();
-    $(".allRetasSection").show();
+    $(".homeSection").hide();
+    $(".loginSection").show();
 }
 
 function getAllRetas(){
@@ -142,7 +143,9 @@ function getUser(username, password){
                 console.log("Login success");
                 currentUser = responseJSON.username;
                 hideSections();
+                $(".homeSection").show();
                 $(".allRetasSection").show();
+                
             }
             clearFields();
 
