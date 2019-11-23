@@ -90,7 +90,15 @@ function loadAllCL(){
     $("#btnLoadAll").on("click", function(e){
         e.preventDefault();
         console.log("Load All");
-        getAllBlogs();
+        getAllRetas();
+    });
+}
+
+function homeCL(){
+    $('#linkAllRetas').on("click", function(e){
+        e.preventDefault();
+        console.log("Load All");
+        getAllRetas();
     });
 }
 
@@ -168,7 +176,7 @@ function getMyRetas(){
         dataType : "json", //Returned type od the response
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
-            console.log("Success on getting all retas");
+            console.log("Success on getting my retas size = " + responseJSON.length );
             $(".listOfRetas").empty();
             for(let i = 0; i < responseJSON.length; i++){
                 $(".listMyRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
