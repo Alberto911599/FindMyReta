@@ -10,10 +10,7 @@ let WIDTH = 200;
 let HEIGHT = 150;
 let encoderOptions = 0.7;
 
-function downscaleImage(url) {
-    // Create a temporary image so that we can compute the height of the downscaled image.
-    let image = new Image();
-    image.src = url;
+function downscaleImage(image) {
     // Create a temporary canvas to draw the downscaled image on.
     let canvas = document.createElement("canvas");
     canvas.width = WIDTH;
@@ -29,8 +26,11 @@ function encodeImageFileAsURL(element) {
     let file = element.files[0];
     let reader = new FileReader();
     reader.onloadend = function() {
-      imageURL = reader.result;
-      console.log(imageURL);
+        let image = new Image();
+        image.src = reader.result; 
+        image.onload = function(){
+            imageURL = downscaleImage(image);
+        }
     }
     reader.readAsDataURL(file);
   }
@@ -56,7 +56,6 @@ function addPlaceCL(){
     $("#btnAddPlace").on("click", function(e){
         e.preventDefault();
         getInputValues();
-        imageURL = downscaleImage(imageURL);
         newPlace = {
             address,
             typeOfSports,
