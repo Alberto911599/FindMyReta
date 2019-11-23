@@ -9,7 +9,7 @@ let address;
 let WIDTH = 200;
 let HEIGHT = 150;
 let encoderOptions = 0.7;
-let currentUser = NULL;
+let currentUser;
 
 function downscaleImage(image) {
     // Create a temporary canvas to draw the downscaled image on.
@@ -140,6 +140,7 @@ function getUser(username, password){
                 console.log("User was not found")
             }
             else{
+                console.log("Login success");
                 currentUser = responseJSON.username;
                 hideSections();
                 $(".allRetasSection").show();
