@@ -94,7 +94,8 @@ app.post('/api/postPlace', jsonParser, (req, res) => {
          cost,
          requisites,
          imageURL,
-         nowPlaying
+         nowPlaying,
+         username
      };
      PlaceList.post(newPlace)
         .then(place => {
