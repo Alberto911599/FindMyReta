@@ -126,6 +126,7 @@ function showAllRetasCL(){
         e.preventDefault();
         hideSections();
         $(".allRetasSection").show();
+        getAllRetas();
         console.log("These are my retas");
     });
 }
@@ -177,8 +178,9 @@ function getMyRetas(){
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting my retas size = " + responseJSON.length );
-            $(".listOfRetas").empty();
+            $(".listMyRetas").empty();
             for(let i = 0; i < responseJSON.length; i++){
+                console.log(responseJSON[i]);
                 $(".listMyRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
                                                 <p>sports = ${responseJSON[i].typeOfSports}</p>
                                                 <p>cost = ${responseJSON[i].cost}</p>
@@ -187,7 +189,6 @@ function getMyRetas(){
                                                 <img src= "${responseJSON[i].imageURL}">
                                           </li>`);
             }
-            clearFields();
         }, 
         error: function(err){
             console.log("error");
