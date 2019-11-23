@@ -6,6 +6,24 @@ let cost;
 let requisites;
 let nowPlaying;
 let address;
+let WIDTH = 200;
+let HEIGHT = 150;
+let encoderOptions = 0.7;
+
+function downscaleImage(url) {
+    // Create a temporary image so that we can compute the height of the downscaled image.
+    let image = new Image();
+    image.src = url;
+    // Create a temporary canvas to draw the downscaled image on.
+    let canvas = document.createElement("canvas");
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+    // Draw the downscaled image on the canvas and return the new data URL.
+    let ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0, WIDTH, HEIGHT);
+    return canvas.toDataURL("image/jpeg", encoderOptions);
+}
+
 
 function encodeImageFileAsURL(element) {
     let file = element.files[0];
@@ -38,6 +56,7 @@ function addPlaceCL(){
     $("#btnAddPlace").on("click", function(e){
         e.preventDefault();
         getInputValues();
+        imageURL = downscaleImage(imageURL);
         newPlace = {
             address,
             typeOfSports,
@@ -60,8 +79,10 @@ function loadAllCL(){
 
 function init(){
     addPlaceCL();
-    getAllRetas();
     loadAllCL();
+
+    getAllRetas();
+    
     $("#btnAddEvent").on("click", function(e){
         e.preventDefault();
         console.log("add event");
