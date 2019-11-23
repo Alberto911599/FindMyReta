@@ -156,7 +156,7 @@ app.delete('/api/deletePlace/:id', (req, res) => {
 app.get('/api/retasLogin/:username/:password', (req, res) => {
     let potUsername = req.params.username;
     let potPassword = req.params.password;
-    if(!username || !password){
+    if(!potUsername || !potPassword){
         res.statusMessage = "Missing username or password";
         return res.status(406).json({
            "error" : "Missing username or password",
