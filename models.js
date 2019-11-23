@@ -7,10 +7,32 @@ let placeSchema = mongoose.Schema({
     cost : {type : String},
     requisites : {type : String},
     nowPlaying : {type : String},
-    imageURL: { type : String }
+    imageURL: { type : String },
+    username : { type : String }
 });
 
+let userSchema = mongoose.Schema({
+    username : {type : String},
+    password : {type : String}
+});
+
+
 let Place = mongoose.model('Reta', placeSchema);
+
+let User = mongoose.model('User', userSchema);
+
+let UserList = {
+    get : function(potUser){
+        console.log("Getting User");
+        return User.findOne(potUser)
+                .then( user => {
+                    return user;
+                })
+                .catch( err=> {
+                    throw Error(err);   
+                });
+    }
+}
 
 let PlaceList = {
     get : function(){
@@ -55,4 +77,4 @@ let PlaceList = {
     }
 }
 
-module.exports = { PlaceList };
+module.exports = { PlaceList, UserList };

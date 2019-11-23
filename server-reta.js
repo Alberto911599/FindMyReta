@@ -2,30 +2,30 @@ let express = require ('express');
 let morgan = require ('morgan');
 let bodyParser = require( "body-parser" );
 let mongoose = require('mongoose');
-let multer = require("multer");
-let GridFsStorage = require("multer-gridfs-storage");
-let Grid = require("gridfs-stream");
-let crypto = require("crypto");
-let path = require('path');
+// let multer = require("multer");
+// let GridFsStorage = require("multer-gridfs-storage");
+// let Grid = require("gridfs-stream");
+// let crypto = require("crypto");
+// let path = require('path');
 let app = express();
 let jsonParser = bodyParser.json();
-let {PlaceList} = require('./models');
+let {PlaceList, UserList} = require('./models');
 let {DATABASE_URL, PORT} = require('./config');
-let mongoURI = "mongodb+srv://root:root@cluster0-znoye.mongodb.net/RetasDB?retryWrites=true&w=majority";
+// let mongoURI = "mongodb+srv://root:root@cluster0-znoye.mongodb.net/RetasDB?retryWrites=true&w=majority";
 
 app.use(express.static('public'));
 app.use( morgan( 'dev' ) );
 mongoose.Promise = global.Promise;
 
 
-let conn = mongoose.createConnection(mongoURI);
-let gfs;
+// let conn = mongoose.createConnection(mongoURI);
+// let gfs;
 
-conn.once('open', () => {
-    gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection("retas");
-    console.log("Connection Successful");
-});
+// conn.once('open', () => {
+//     gfs = Grid(conn.db, mongoose.mongo);
+//     gfs.collection("retas");
+//     console.log("Connection Successful");
+// });
 
 
 app.use(function(req, res, next) {
@@ -35,26 +35,26 @@ app.use(function(req, res, next) {
 });
 
 // Create storage engine
-const storage = new GridFsStorage({
-    url: mongoURI,
-    file: (req, file) => {
-      return new Promise((resolve, reject) => {
-        crypto.randomBytes(16, (err, buf) => {
-          if (err) {
-            return reject(err);
-          }
-          const filename = buf.toString('hex') + path.extname(file.originalname);
-          const fileInfo = {
-            filename: filename,
-            bucketName: "retas"
-          };
-          resolve(fileInfo);
-        });
-      });
-    }
-  });
+// const storage = new GridFsStorage({
+//     url: mongoURI,
+//     file: (req, file) => {
+//       return new Promise((resolve, reject) => {
+//         crypto.randomBytes(16, (err, buf) => {
+//           if (err) {
+//             return reject(err);
+//           }
+//           const filename = buf.toString('hex') + path.extname(file.originalname);
+//           const fileInfo = {
+//             filename: filename,
+//             bucketName: "retas"
+//           };
+//           resolve(fileInfo);
+//         });
+//       });
+//     }
+//   });
   
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
 
 app.get('/api/allRetas', ( req, res, next ) => {
@@ -79,10 +79,7 @@ app.post('/api/postPlace', jsonParser, (req, res) => {
     let cost = req.body.cost;
     let requisites = req.body.requisites;
     let nowPlaying = req.body.nowPlaying;
-    let imageURL = req.body.imageURL;
-    console.log(location);
-    console.log(typeOfSports);
-    console.log(cost);
+    let imageURL = req.body.imageURL;   
     if(!location || !typeOfSports || !cost){
         res.statusMessage = "Missing field in place form";
         return res.status(406).json({
@@ -111,42 +108,6 @@ app.post('/api/postPlace', jsonParser, (req, res) => {
         });
 });
 
-app.post('/api/uploadImage', upload.single('file'), jsonParser, (req, res, err) => {
-    res.json({file : req.file });
-
-    let location = req.body.location;
-    let typeOfSports = req.body.typeOfSports;
-    let cost = req.body.cost;
-    let requisites = req.body.requisites;
-    let image = "dummy";
-    let nowPlaying = req.body.nowPlaying;
-    if(!location || !typeOfSports || !cost || !image){
-        res.statusMessage = "Missing field in place form";
-        return res.status(406).json({
-           "error" : "Missing field",
-           "status" : 406
-        });
-    }
-     let newPlace = {
-         location,
-         typeOfSports,
-         cost,
-         requisites,
-         image,
-         nowPlaying
-     };
-     PlaceList.post(newPlace)
-        .then(place => {
-            res.status(201).json(place);
-        })
-        .catch(err => {
-            res.statusMessage = "Something went wrong";
-            return res.status(501).json({
-                "error" : "Something went wrong with the data base",
-                "status" : 501
-            });
-        });
-})
 
 app.put('/api/updatePlace/:id', jsonParser, (req, res, next) => {
     let filterID = req.params.id;
@@ -191,6 +152,29 @@ app.delete('/api/deletePlace/:id', (req, res) => {
            });
        });
 });
+
+app.get('/api/retasLogin/:username/:password', (req, res) => {
+    let potUsername = req.params.username;
+    let potPassword = req.params.password;
+    if(!username || !password){
+        res.statusMessage = "Missing username or password";
+        return res.status(406).json({
+           "error" : "Missing username or password",
+           "status" : 406
+       });
+    }
+    UserList.get({username : potUsername, password : potPassword})
+        .then( retas => {
+            return res.status( 200 ).json( retas );
+        })
+        .catch( error => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status( 500 ).json({
+                status : 500,
+                message : "Something went wrong with the DB. Try again later."
+            })
+        });
+})
 
 
 let server;

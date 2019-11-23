@@ -21,7 +21,6 @@ function downscaleImage(image) {
     return canvas.toDataURL("image/jpeg", encoderOptions);
 }
 
-
 function encodeImageFileAsURL(element) {
     let file = element.files[0];
     let reader = new FileReader();
@@ -68,6 +67,15 @@ function addPlaceCL(){
     });
 }
 
+function loginCL(){
+    $("#btnLogin").on("click", function(e){
+        e.preventDefault();
+        let potentialUsername = $("#usernameInput").val();
+        let potentialPassword = $("#passwordInput").val();
+        getUser(potentialUsername, potentialPassword);
+    });
+}
+
 function loadAllCL(){
     $("#btnLoadAll").on("click", function(e){
         e.preventDefault();
@@ -79,29 +87,8 @@ function loadAllCL(){
 function init(){
     addPlaceCL();
     loadAllCL();
-
     getAllRetas();
-    
-    $("#btnAddEvent").on("click", function(e){
-        e.preventDefault();
-        console.log("add event");
-        // updPost = {
-        //     title : $("#tileInput").val(),
-        //     content : $("#contentInput").val(),
-        //     author :  $("#authorInput").val(),
-        //     publishDate : $("#publishDateInput").val(),
-        //     id : $("#idInput").val()
-        // };
-        // updateById($("#idInput").val(), updPost);
-    });
-    // $("#btnSearchByAuthor").on("click", function(e){
-    //     e.preventDefault();
-    //     getBlogsByAuthor($("#auhorSearch").val());
-    // });
-    // $("#btnDelete").on("click", function(e){
-    //     e.preventDefault();
-    //     deleteById($("#idDelete").val());
-    // });
+    loginCL();
 }
 
 function getAllRetas(){
@@ -131,31 +118,29 @@ function getAllRetas(){
     });
 }
 
-// function getBlogsByAuthor(author){
-//     $.ajax({
-//         url:(url + '/blog-posts/' + author), //url/endpointToAPI,
-//         method: "GET", 
-//         data: {}, //Info sent to the API
-//         dataType : "json", //Returned type od the response
-//         ContentType : "application/json", //Type of sent data in the request (optional)
-//         success : function(responseJSON){
-//             $(".listOfBlogs").empty();
-//             for(let i = 0; i < responseJSON.length; i++){
-//                 $(".listOfBlogs").append(`<li>   <p>id = ${responseJSON[i].id}</p>
-//                                                     <p>author = ${responseJSON[i].author}</p>
-//                                                     <p>title = ${responseJSON[i].title}</p>
-//                                                     <p>content = ${responseJSON[i].content}</p> 
-//                                                     <p>publishingDate = ${responseJSON[i].publishDate}</p>
-//                                         </li>`);
-//             }
-//             clearFields();
+function getUser(username, password){
+    $.ajax({
+        url:(url + '/retasLogin/' + username + "/" + password), //url/endpointToAPI,
+        method: "GET", 
+        data: {}, //Info sent to the API
+        dataType : "json", //Returned type od the response
+        ContentType : "application/json", //Type of sent data in the request (optional)
+        success : function(responseJSON){
+            console.log(responseJSON);
+            if(!responseJSON){
+                console.log("User was not found")
+            }
+            else{
+                console.log("User found");
+            }
+            clearFields();
 
-//         }, 
-//         error: function(err){
-//             console.log("error");
-//         }
-//     });
-// }
+        }, 
+        error: function(err){
+            console.log("error");
+        }
+    });
+}
 
 function postNewPlace(newPlace){
     console.log(newPlace);
