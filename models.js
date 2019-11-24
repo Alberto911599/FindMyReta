@@ -8,7 +8,9 @@ let placeSchema = mongoose.Schema({
     requisites : {type : String},
     nowPlaying : {type : String},
     imageURL: { type : String },
-    username : { type : String }
+    username : { type : String },
+    likes : {type : Number},
+    assistants : {type : Number}
 });
 
 let userSchema = mongoose.Schema({

@@ -13,7 +13,7 @@ let currentUser;
 // image downsize parameters
 let WIDTH = 200;
 let HEIGHT = 150;
-let encoderOptions = 0.7;
+let encoderOptions = 0.8;
 
 // google maps api autocomplete
 let autocomplete;
@@ -50,7 +50,7 @@ function initAutocomplete() {
   
     // Avoid paying for data that you don't need by restricting the set of
     // place fields that are returned to just the address components.
-    autocomplete.setFields(['address_component']);
+    // autocomplete.setFields(['address_component']);
   
     // When the user selects an address from the drop-down, populate the
     // address fields in the form.
