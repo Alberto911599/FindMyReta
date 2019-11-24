@@ -11,29 +11,17 @@
     <main>
         
         <section class="loginSection">
-            <div class="wrapper fadeInDown">
-                <div id="formContent">
-                    <!-- Tabs Titles -->
-                
-                    <!-- Icon -->
-                    <div class="fadeIn first">
-                    <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
-                    </div>
-                
-                    <!-- Login Form -->
-                    <form>
-                    <input type="text" id="usernameInput" class="fadeIn second" name="login" placeholder="username">
-                    <input type="text" id="passwordInput" class="fadeIn third" name="login" placeholder="password">
-                    <input type="submit" class="fadeIn fourth" value="Log In">
-                    </form>
-                
-                    <!-- Remind Passowrd -->
-                    <div id="formFooter">
-                    <a class="underlineHover" href="#">SignUp</a>
-                    </div>
-                
+            <form class="wrapper">
+                <img src="icon_fmr.jpg" id="icon" alt="User Icon"/>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="usernameInput" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
-            </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+                </div>
+                
+                <input type="submit" class="btn btn-fmr" id="btnLogin" value="Log In">
+            </form>>
         </section>
 
 
