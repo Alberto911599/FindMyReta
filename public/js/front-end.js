@@ -1,15 +1,21 @@
+// base url
 let url = 'https://vast-forest-34191.herokuapp.com/api';
 
+// attributes for a new reta place
 let imageURL;
 let typeOfSports;
 let cost;
 let requisites;
 let nowPlaying;
 let address;
+let currentUser;
+
+// image downsize parameters
 let WIDTH = 200;
 let HEIGHT = 150;
 let encoderOptions = 0.7;
-let currentUser;
+
+// google maps api autocomplete
 let autocomplete;
 
 function downscaleImage(image) {
@@ -54,8 +60,11 @@ function initAutocomplete() {
 function fillInAddress() {
     // Get the place details from the autocomplete object.
     let place = autocomplete.getPlace();
-    console.log("autocomplete");
-    console.log(place);
+    address = "";
+    for(let i = 0; place.address_components.length; i++){
+        address += place.address_components[i].long_name;
+    }
+    console.log("Final address = " + address);
 }
 
 function geolocate() {
