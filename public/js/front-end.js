@@ -1,3 +1,7 @@
+// TODO edit and delete own retas
+// Comments
+// Filter by city and currently active
+
 // base url
 let url = 'https://vast-forest-34191.herokuapp.com/api';
 
@@ -60,11 +64,12 @@ function initAutocomplete() {
 function fillInAddress() {
     // Get the place details from the autocomplete object.
     let place = autocomplete.getPlace();
+    console.log(place);
     address = "";
     for(let i = 0; place.address_components.length; i++){
         address += place.address_components[i].long_name;
     }
-    console.log("Final address = " + address);
+    // console.log("Final address = " + address);
 }
 
 function geolocate() {

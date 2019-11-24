@@ -15,7 +15,8 @@ let placeSchema = mongoose.Schema({
 
 let userSchema = mongoose.Schema({
     username : {type : String},
-    password : {type : String}
+    password : {type : String},
+    city : {type : String}
 });
 
 
