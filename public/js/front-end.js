@@ -79,11 +79,12 @@ function initAutocomplete() {
 function fillInAddress() {
     // Get the place details from the autocomplete object.
     let place = autocomplete.getPlace();
+    console.log(place);
     for (let i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];
         if (addressType === 'locality') {
         //   city = place.address_components[i].long_name
-            myNewReta.city = place.address_components[i]['locality'];
+            myNewReta.city = place.address_components[i].long_term;
         }
     }
     console.log(myNewReta);
@@ -247,7 +248,7 @@ function getUser(username, password){
             }
             else{
                 console.log("Login success");
-                currentUser = responseJSON.username;
+                myNewReta.username = responseJSON.username;
                 hideSections();
                 $(".homeSection").show();
                 $(".allRetasSection").show();
