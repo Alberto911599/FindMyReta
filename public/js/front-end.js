@@ -18,15 +18,15 @@ let myNewReta = {
     assistants : 0
 }
 
-let imageURL;
-let typeOfSports;
-let cost;
-let requisites;
-let nowPlaying;
-let address;
-let currentUser;
-let userCity;
-let city;
+// let imageURL;
+// let typeOfSports;
+// let cost;
+// let requisites;
+// let nowPlaying;
+// let address;
+// let currentUser;
+// let userCity;
+// let city;
 
 // image downsize parameters
 let WIDTH = 200;
@@ -104,7 +104,7 @@ function geolocate() {
 }
 
 function hideSections(){
-    $(".addPlaceSection").hide();
+    $(".addRetaSection").hide();
     $(".loginSection").hide();
     $(".allRetasSection").hide();
     $(".myRetasSection").hide();
@@ -268,7 +268,7 @@ function postNewReta(){
     $.ajax({
         url:(url + "/postPlace"), //url/endpointToAPI,
         type: "POST", 
-        data: JSON.stringify(newPlace),
+        data: JSON.stringify(myNewReta),
         contentType: "application/json; charset=utf-8",
         success : function(result){
             console.log("Success posting new reta")
