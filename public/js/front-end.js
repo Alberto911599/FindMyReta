@@ -82,9 +82,9 @@ function fillInAddress() {
     console.log(place);
     for (let i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];
-        if (addressType === 'locality') {
+        if (addressType === "locality") {
         //   city = place.address_components[i].long_name
-            myNewReta.city = place.address_components[i].long_term;
+            myNewReta.city = place.address_components[i].long_name;
         }
     }
     console.log(myNewReta);
