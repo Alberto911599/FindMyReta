@@ -50,11 +50,11 @@ function initAutocomplete() {
     // Create the autocomplete object, restricting the search predictions to
     // geographical location types.
     autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById("locationInput"), {types: ['geocode']});
+        document.getElementById("locationInput"), {types: ['geocode', 'address', 'establishment']});
   
     // Avoid paying for data that you don't need by restricting the set of
     // place fields that are returned to just the address components.
-    // autocomplete.setFields(['address_component']);
+    autocomplete.setFields(['address_component']);
   
     // When the user selects an address from the drop-down, populate the
     // address fields in the form.
@@ -65,10 +65,6 @@ function fillInAddress() {
     // Get the place details from the autocomplete object.
     let place = autocomplete.getPlace();
     console.log(place);
-    address = "";
-    for(let i = 0; place.address_components.length; i++){
-        address += place.address_components[i].long_name;
-    }
     // console.log("Final address = " + address);
 }
 
