@@ -78,7 +78,7 @@
                     <label>
                         Add a place
                     </label>
-                    <input id="locationInput" class="textInput" type="text" placeholder="Location">
+                    <input id="locationInput" class="textInput" type="text" onFocus="geolocate()" placeholder="Location">
                     <input id="typeOfSportsInput" class="textInput" type="text" placeholder="Sports">
                     <input id="costInput" class="textInput" type="text" placeholder="costs">
                     <input id="requisitesInput" class="textInput" type="text" placeholder="requisites">
@@ -121,7 +121,10 @@
         </section>
 
     </main>
-
+    <script 
+        type="text/javascript" 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOzGquxByWDUvMNVYuWgTcYWx7pQQXsIQ&libraries=places">
+    </script>
     <script
         src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -137,6 +140,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
         crossorigin="anonymous">
     </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOzGquxByWDUvMNVYuWgTcYWx7pQQXsIQ &libraries=places"></script>
     <script src = "js/front-end.js"></script>
 </body>
 </html>

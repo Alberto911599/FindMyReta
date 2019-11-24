@@ -10,6 +10,7 @@ let WIDTH = 200;
 let HEIGHT = 150;
 let encoderOptions = 0.7;
 let currentUser;
+let autocomplete;
 
 function downscaleImage(image) {
     // Create a temporary canvas to draw the downscaled image on.
@@ -33,6 +34,42 @@ function encodeImageFileAsURL(element) {
         }
     }
     reader.readAsDataURL(file);
+}
+
+function initAutocomplete() {
+    // Create the autocomplete object, restricting the search predictions to
+    // geographical location types.
+    autocomplete = new google.maps.places.Autocomplete(
+        $("#locationInput"), {types: ['geocode']});
+  
+    // Avoid paying for data that you don't need by restricting the set of
+    // place fields that are returned to just the address components.
+    autocomplete.setFields(['address_component']);
+  
+    // When the user selects an address from the drop-down, populate the
+    // address fields in the form.
+    autocomplete.addListener('place_changed', fillInAddress);
+}
+
+function fillInAddress() {
+    // Get the place details from the autocomplete object.
+    let place = autocomplete.getPlace();
+    console.log("autocomplete");
+    console.log(place);
+}
+
+function geolocate() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var geolocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        var circle = new google.maps.Circle(
+            {center: geolocation, radius: position.coords.accuracy});
+        autocomplete.setBounds(circle.getBounds());
+      });
+    }
 }
 
 function hideSections(){
@@ -132,6 +169,7 @@ function showAllRetasCL(){
 }
 
 function init(){
+    initAutocomplete();
     addPlaceCL();
     addNewRetaCL();
     loadAllCL();
@@ -151,7 +189,7 @@ function getAllRetas(){
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting all retas");
-            $(".listOfRetas").empty();
+            $("#listOfRetas").empty();
             for(let i = 0; i < responseJSON.length; i++){
                 $("#listOfRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
                                                 <p>sports = ${responseJSON[i].typeOfSports}</p>
@@ -178,7 +216,7 @@ function getMyRetas(){
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting my retas size = " + responseJSON.length );
-            $(".listMyRetas").empty();
+            $("#listMyRetas").empty();
             for(let i = 0; i < responseJSON.length; i++){
                 console.log(responseJSON[i]);
                 $("#listMyRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
