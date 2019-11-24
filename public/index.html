@@ -28,7 +28,9 @@
         <section class="homeSection">
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">FindMyReta</a>
+                <a class="navbar-brand" href="#">
+                    <img src="icon_fmr.jpg" width="200" height="50" class="d-inline-block align-top" alt="">
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -36,13 +38,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" id="linkAllRetas" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" id="linkAllRetas" href="#">AllRetas <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="linkMyRetas" href="#">MyRetas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id = "linkAddReta" href="#">Add Reta</a>
+                        <a class="nav-link" id = "linkAddReta" href="#">AddReta</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -90,12 +92,15 @@
                 </form>
             </section>
 
-            <section class="allRetasSection">    
-                <ul id="listOfRetas"></ul>
+            <section class="allRetasSection">   
+                <div class="container mt-4" id="listOfRetas">
+
+                </div> 
             </section>
 
             <section class="myRetasSection">    
-                <ul id="listMyRetas"></ul>
+                <div class="container mt-4" id="listMyRetas">
+                </div>
             </section>
 
         </section>

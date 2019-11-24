@@ -5,6 +5,8 @@
 // base url
 let url = 'https://vast-forest-34191.herokuapp.com/api';
 
+
+// new place to add
 let myNewReta = {
     location : "",
     city : "",
@@ -18,20 +20,13 @@ let myNewReta = {
     assistants : 0
 }
 
-// let imageURL;
-// let typeOfSports;
-// let cost;
-// let requisites;
-// let nowPlaying;
-// let address;
-// let currentUser;
-// let userCity;
-// let city;
+// esta variable permite llevar un control del grid
+let numberOfCols = 4;
 
 // image downsize parameters
 let WIDTH = 200;
 let HEIGHT = 150;
-let encoderOptions = 0.8;
+let encoderOptions = 0.90;
 
 // google maps api autocomplete
 let autocomplete;
@@ -121,11 +116,6 @@ function clearFields(){
 }
 
 function getInputValues(){
-    // address = $("#locationInput").val();
-    // typeOfSports =  $("#typeOfSportsInput").val();
-    // cost = $("#costInput").val();
-    // requisites = $("#requisitesInput").val();
-    // nowPlaying = $("#nowPlayingInput").val();
     myNewReta.location = $("#locationInput").val();
     myNewReta.typeOfSports =  $("#typeOfSportsInput").val();
     myNewReta.cost = $("#costInput").val();
@@ -190,14 +180,27 @@ function getAllRetas(){
         success : function(responseJSON){
             console.log("Success on getting all retas");
             $("#listOfRetas").empty();
-            for(let i = 0; i < responseJSON.length; i++){
-                $("#listOfRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
-                                                <p>sports = ${responseJSON[i].typeOfSports}</p>
-                                                <p>cost = ${responseJSON[i].cost}</p>
-                                                <p>requisites = ${responseJSON[i].requisites}</p>
-                                                <p>nowPlaying = ${responseJSON[i].nowPlaying}</p>
-                                                <img src= "${responseJSON[i].imageURL}">
-                                          </li>`);
+            let i = 0, cont = 0, j = numberOfCols;
+            while(i < responseJSON.length){
+                $("#listOfRetas").append(`<div class="card-deck justify-content-around" id="card-deck-${cont}"></div>`);
+                while(i < responseJSON.length && i < j){
+                    $("#card-deck-" + cont).append(`  
+                            <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
+                                <img class="card-img-top" src="${responseJSON[i].imageURL}" alt="Reta image">
+                                <div class="card-body">
+                                    <h5 class="card-title">${responseJSON[i].typeOfSports}</h5>
+                                    <p class="card-text">${responseJSON[i].requisites}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">${responseJSON[i].city}</small>
+                                    <small class="text-muted">${responseJSON[i].nowPlaying}</small>
+                                </div>
+                            </div>`    
+                    );
+                    i++;
+                }
+                j += numberOfCols;
+                cont++;
             }
             clearFields();
         }, 
@@ -209,7 +212,7 @@ function getAllRetas(){
 
 function getMyRetas(){
     $.ajax({
-        url:(url + "/myRetas/" + currentUser), //url/endpointToAPI,
+        url:(url + "/myRetas/" + myNewReta.username), //url/endpointToAPI,
         method: "GET", 
         data: {}, //Info sent to the API
         dataType : "json", //Returned type od the response
@@ -217,15 +220,27 @@ function getMyRetas(){
         success : function(responseJSON){
             console.log("Success on getting my retas size = " + responseJSON.length );
             $("#listMyRetas").empty();
-            for(let i = 0; i < responseJSON.length; i++){
-                console.log(responseJSON[i]);
-                $("#listMyRetas").append(`<li>  <p>location = ${responseJSON[i].location}</p>
-                                                <p>sports = ${responseJSON[i].typeOfSports}</p>
-                                                <p>cost = ${responseJSON[i].cost}</p>
-                                                <p>requisites = ${responseJSON[i].requisites}</p>
-                                                <p>nowPlaying = ${responseJSON[i].nowPlaying}</p>
-                                                <img src= "${responseJSON[i].imageURL}">
-                                          </li>`);
+            let i = 0, cont = 0, j = numberOfCols;
+            while(i < responseJSON.length){
+                $("#listMyRetas").append(`<div class="card-deck justify-content-around" id="card-deck-mr-${cont}"></div>`);
+                while(i < responseJSON.length && i < j){
+                    $("#card-deck-mr-" + cont).append(`  
+                            <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
+                                <img class="card-img-top" src="${responseJSON[i].imageURL}" alt="Reta image">
+                                <div class="card-body">
+                                    <h5 class="card-title">${responseJSON[i].typeOfSports}</h5>
+                                    <p class="card-text">${responseJSON[i].requisites}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">${responseJSON[i].city}</small>
+                                    <small class="text-muted">${responseJSON[i].nowPlaying}</small>
+                                </div>
+                            </div>`    
+                    );
+                    i++;
+                }
+                j += numberOfCols;
+                cont++;
             }
         }, 
         error: function(err){
