@@ -3,6 +3,7 @@ mongoose.Promise = global.Promise;
 
 let placeSchema = mongoose.Schema({
     location : {type : String},
+    city : {type : String},
     typeOfSports : {type : String},
     cost : {type : String},
     requisites : {type : String},

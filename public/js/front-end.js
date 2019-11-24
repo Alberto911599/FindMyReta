@@ -5,7 +5,19 @@
 // base url
 let url = 'https://vast-forest-34191.herokuapp.com/api';
 
-// attributes for a new reta place
+let myNewReta = {
+    location : "",
+    city : "",
+    typeOfSports : "",
+    cost : "",
+    requisites : "",
+    nowPlaying : "",
+    imageURL: "",
+    username : "",
+    likes : 0,
+    assistants : 0
+}
+
 let imageURL;
 let typeOfSports;
 let cost;
@@ -13,6 +25,8 @@ let requisites;
 let nowPlaying;
 let address;
 let currentUser;
+let userCity;
+let city;
 
 // image downsize parameters
 let WIDTH = 200;
@@ -40,7 +54,8 @@ function encodeImageFileAsURL(element) {
         let image = new Image();
         image.src = reader.result; 
         image.onload = function(){
-            imageURL = downscaleImage(image);
+            // imageURL = downscaleImage(image);
+            myNewReta.imageURL = downscaleImage(image)
         }
     }
     reader.readAsDataURL(file);
@@ -64,8 +79,14 @@ function initAutocomplete() {
 function fillInAddress() {
     // Get the place details from the autocomplete object.
     let place = autocomplete.getPlace();
-    console.log(place);
-    // console.log("Final address = " + address);
+    for (let i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        if (addressType === 'locality') {
+        //   city = place.address_components[i].long_name
+            myNewReta.city = place.address_components[i]['locality'];
+        }
+    }
+    console.log(myNewReta);
 }
 
 function geolocate() {
@@ -84,7 +105,6 @@ function geolocate() {
 
 function hideSections(){
     $(".addPlaceSection").hide();
-    $(".addEventSection").hide();
     $(".loginSection").hide();
     $(".allRetasSection").hide();
     $(".myRetasSection").hide();
@@ -100,65 +120,35 @@ function clearFields(){
 }
 
 function getInputValues(){
-    address = $("#locationInput").val();
-    typeOfSports =  $("#typeOfSportsInput").val();
-    cost = $("#costInput").val();
-    requisites = $("#requisitesInput").val();
-    nowPlaying = $("#nowPlayingInput").val();
+    // address = $("#locationInput").val();
+    // typeOfSports =  $("#typeOfSportsInput").val();
+    // cost = $("#costInput").val();
+    // requisites = $("#requisitesInput").val();
+    // nowPlaying = $("#nowPlayingInput").val();
+    myNewReta.location = $("#locationInput").val();
+    myNewReta.typeOfSports =  $("#typeOfSportsInput").val();
+    myNewReta.cost = $("#costInput").val();
+    myNewReta.requisites = $("#requisitesInput").val();
+    myNewReta.nowPlaying = $("#nowPlayingInput").val();
 }
 
-function addPlaceCL(){
-    $("#btnAddPlace").on("click", function(e){
-        e.preventDefault();
-        getInputValues();
-        newPlace = {
-            address,
-            typeOfSports,
-            cost,
-            requisites,
-            imageURL,
-            nowPlaying,
-            currentUser
-        };
-        postNewPlace(newPlace);
-    });
-}
+function clickListeners(){
 
-function loginCL(){
     $("#btnLogin").on("click", function(e){
         e.preventDefault();
         let potentialUsername = $("#usernameInput").val();
         let potentialPassword = $("#passwordInput").val();
         getUser(potentialUsername, potentialPassword);
     });
-}
 
-function loadAllCL(){
-    $("#btnLoadAll").on("click", function(e){
-        e.preventDefault();
-        console.log("Load All");
-        getAllRetas();
-    });
-}
-
-function homeCL(){
     $('#linkAllRetas').on("click", function(e){
         e.preventDefault();
-        console.log("Load All");
-        getAllRetas();
-    });
-}
-
-function addNewRetaCL(){
-    $('#linkAddReta').on("click", function(e){
-        e.preventDefault();
         hideSections();
-        $(".addPlaceSection").show();
-        console.log("Add Reta");
+        $(".allRetasSection").show();
+        getAllRetas();
+        console.log("These are my retas");;
     });
-}
 
-function showMyRetasCL(){
     $('#linkMyRetas').on("click", function(e){
         e.preventDefault();
         hideSections();
@@ -166,26 +156,25 @@ function showMyRetasCL(){
         getMyRetas();
         console.log("These are my retas");
     });
-}
 
-function showAllRetasCL(){
-    $('#linkAllRetas').on("click", function(e){
+    $('#linkAddReta').on("click", function(e){
         e.preventDefault();
         hideSections();
-        $(".allRetasSection").show();
-        getAllRetas();
-        console.log("These are my retas");
+        $(".addRetaSection").show();
+        console.log("Add Reta Section");
+    });
+
+    $("#btnAddReta").on("click", function(e){
+        e.preventDefault();
+        getInputValues();
+        postNewReta();
     });
 }
 
+
 function init(){
     initAutocomplete();
-    addPlaceCL();
-    addNewRetaCL();
-    loadAllCL();
-    loginCL();
-    showMyRetasCL();
-    showAllRetasCL();
+    clickListeners();
     $(".homeSection").hide();
     $(".loginSection").show();
 }
@@ -273,15 +262,16 @@ function getUser(username, password){
     });
 }
 
-function postNewPlace(newPlace){
-    console.log(newPlace);
+function postNewReta(){
+    console.log("Posting new reta this is what I am gonna post : ")
+    console.log(myNewReta);
     $.ajax({
         url:(url + "/postPlace"), //url/endpointToAPI,
         type: "POST", 
         data: JSON.stringify(newPlace),
         contentType: "application/json; charset=utf-8",
         success : function(result){
-            console.log("Success posting new place")
+            console.log("Success posting new reta")
             getAllRetas();
         },
         error : function(err){

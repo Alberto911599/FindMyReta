@@ -60,7 +60,7 @@
                 </div>
             </nav>
 
-            <section class="addPlaceSection" >
+            <section class="addRetaSection" >
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 m-auto">
@@ -76,49 +76,28 @@
                 </div>        
                 <form>
                     <label>
-                        Add a place
+                        Add Reta
                     </label>
                     <input id="locationInput" class="textInput" type="text" onFocus="geolocate()" placeholder="Location">
                     <input id="typeOfSportsInput" class="textInput" type="text" placeholder="Sports">
                     <input id="costInput" class="textInput" type="text" placeholder="costs">
                     <input id="requisitesInput" class="textInput" type="text" placeholder="requisites">
-                    <input id="imageInput" class="textInput" type="text" placeholder="image">
                     <input id="nowPlayingInput" class="textInput" type="text" placeholder="Now Playing">
-                    <button id="btnAddPlace" type="button">
-                        Add Place
-                    </button>
-                </form>
-            </section>
-
-            <section class="addEventSection">        
-                <form>
-                    <label>
-                        Add event
-                    </label>
-                    <input id="placeInput" class="textInput" type="text" placeholder="Place">
-                    <input id="typeOfGameInput" class="textInput" type="text" placeholder="Type of game">
-                    <input id="assistantsInput" class="textInput" type="text" placeholder="Assistants">
-                    <input id="rulesInput" class="textInput" type="text" placeholder="Rules">
-                    <input id="descriptionInput" class="textInput" type="text" placeholder="description">
-                    <input id="startTimeInput" class="textInput" type="text" placeholder="start time">
-                    <input id="endTimeInput" class="textInput" type="text" placeholder="end time">
-                    <button id="btnAddEvent" type="button">
-                        Add
+                    <button id="btnAddReta" type="button">
+                        Add Reta
                     </button>
                 </form>
             </section>
 
             <section class="allRetasSection">    
                 <ul id="listOfRetas"></ul>
-                <button id="btnLoadAll">LoadAll</button>
             </section>
 
             <section class="myRetasSection">    
                 <ul id="listMyRetas"></ul>
-                <button id="btnLoadAll">LoadAll</button>
             </section>
 
-        </section>
+        </section>{}
 
     </main>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOzGquxByWDUvMNVYuWgTcYWx7pQQXsIQ&libraries=places"></script>
