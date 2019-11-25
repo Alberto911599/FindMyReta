@@ -14,6 +14,10 @@
     font-weight: bold;
 }
 
+.card-img-top:hover, .custom-control-input:hover{
+    cursor: pointer;
+}
+
 #icon {
     padding-top: 20px;
     padding-bottom: 20px;

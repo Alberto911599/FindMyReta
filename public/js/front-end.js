@@ -21,6 +21,11 @@ let myNewReta = {
     assistants : 0
 }
 
+let currentUser = {
+    username : "", 
+    city : ""
+}
+
 // esta variable permite llevar un control del grid
 let numberOfCols = 4;
 
@@ -105,6 +110,7 @@ function hideSections(){
     $(".loginSection").hide();
     $(".allRetasSection").hide();
     $(".myRetasSection").hide();
+    $(".detailsSection").hide();
 }
 
 function clearFields(){
@@ -127,6 +133,23 @@ function getInputValues(){
 }
 
 function clickListeners(){
+
+    $("#filterMyCity").on("click", function(e){
+        e.preventDefault();
+        getRetasByCity();
+    });
+
+    $("#listOfRetas").on("click", ".card-img-top", function(e){
+        e.preventDefault();
+        hideSections();
+        $(".detailsSection").show();
+    });
+
+    $("#listMyRetas").on("click", ".card-img-top", function(e){
+        e.preventDefault();
+        hideSections();
+        $(".detailsSection").show();
+    });
 
     $("#btnLogin").on("click", function(e){
         e.preventDefault();
@@ -197,9 +220,9 @@ function getAllRetas(){
                                 </div>
                                 <div class="card-footer">
                                     <small class="text-muted">${responseJSON[i].city}</small>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio1">Currently Active</label>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="sw-${i}">
+                                        <label class="custom-control-label" for="sw-${i}">Currently Active</label>
                                     </div>
                                 </div>
                             </div>`    
@@ -256,6 +279,45 @@ function getMyRetas(){
     });
 }
 
+function getRetasByCity(){
+    $.ajax({
+        url:(url + "/allRetas/" + currentUser.city), //url/endpointToAPI,
+        method: "GET", 
+        data: {}, //Info sent to the API
+        dataType : "json", //Returned type od the response
+        ContentType : "application/json", //Type of sent data in the request (optional)
+        success : function(responseJSON){
+            console.log("Success on getting retas by city = " + responseJSON.length );
+            $("#listMyRetas").empty();
+            let i = 0, cont = 0, j = numberOfCols;
+            while(i < responseJSON.length){
+                $("#listMyRetas").append(`<div class="card-deck justify-content-around" id="card-deck-mr-${cont}"></div>`);
+                while(i < responseJSON.length && i < j){
+                    $("#card-deck-mr-" + cont).append(`  
+                            <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
+                                <img class="card-img-top" src="${responseJSON[i].imageURL}" alt="Reta image">
+                                <div class="card-body">
+                                    <h5 class="card-title">${responseJSON[i].typeOfSports}</h5>
+                                    <p class="card-text">${responseJSON[i].requisites}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">${responseJSON[i].city}</small>
+                                    <small class="text-muted">${responseJSON[i].nowPlaying}</small>
+                                </div>
+                            </div>`    
+                    );
+                    i++;
+                }
+                j += numberOfCols;
+                cont++;
+            }
+        }, 
+        error: function(err){
+            console.log("error");
+        }
+    });
+}
+
 function getUser(username, password){
     $.ajax({
         url:(url + '/retasLogin/' + username + "/" + password), //url/endpointToAPI,
@@ -270,7 +332,8 @@ function getUser(username, password){
             }
             else{
                 console.log("Login success");
-                myNewReta.username = responseJSON.username;
+                myNewReta.username = currentUser.username = responseJSON.username;
+                currentUser.city = responseJSON.city;
                 hideSections();
                 $(".homeSection").show();
                 $(".allRetasSection").show();
@@ -296,7 +359,7 @@ function postNewReta(){
         success : function(result){
             console.log("Success posting new reta");
             hideSections();
-            $("allRetasSection").show();
+            $(".allRetasSection").show();
             getAllRetas();
         },
         error : function(err){

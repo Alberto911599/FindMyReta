@@ -50,6 +50,22 @@ app.get('/api/myRetas/:username', ( req, res, next ) => {
 		});
 });
 
+app.get('/api/allRetas/:city', ( req, res, next ) => {
+    console.log("Getting retas by city in server");
+    let filter = {city : req.params.city};
+	PlaceList.getMyRetas(filter)
+		.then( retas => {
+			return res.status( 200 ).json( retas );
+		})
+		.catch( error => {
+			res.statusMessage = "Something went wrong with the DB. Try again later.";
+			return res.status( 500 ).json({
+				status : 500,
+				message : "Something went wrong with the DB. Try again later."
+			})
+		});
+});
+
 app.post('/api/postPlace', jsonParser, (req, res) => {
     console.log("Posting new place");
     if(!req.body.name || !req.body.location || !req.body.typeOfSports || !req.body.cost){
