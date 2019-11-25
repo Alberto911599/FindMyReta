@@ -127,8 +127,9 @@ app.put('/api/updatePlace/:id', jsonParser, (req, res, next) => {
        });
 });
 
-app.delete('/api/deletePlace/:id', (req, res) => {
+app.delete('/api/deleteReta/:id', (req, res) => {
     let filterID = req.params.id;
+    console.log("deleting " + filterID);
     if(!filterID){
         res.statusMessage = "Missing field id";
         return res.status(406).json({
@@ -136,7 +137,7 @@ app.delete('/api/deletePlace/:id', (req, res) => {
            "status" : 406
        });
     }
-    PlaceList.delete({ id : filterID })
+    PlaceList.delete({_id : filterID})
        .then(blog => {
            res.status(201).json(blog);
        })

@@ -1,6 +1,5 @@
 // TODO edit and delete own retas
 // Comments
-// Filter by city and currently active
 
 // base url
 let url = 'https://vast-forest-34191.herokuapp.com/api';
@@ -21,12 +20,17 @@ let myNewReta = {
     assistants : 0
 }
 
+// user currently logged in
 let currentUser = {
     username : "", 
     city : ""
 }
 
+// these are the fields used in search by term
 let searchableFields = ["location", "name", "typeOfSports", "cost", "requisites"];
+
+// This array stores the id of each of the items currently showed
+let itemsId = [];
 
 // esta variable permite llevar un control del grid
 let numberOfCols = 4;
@@ -125,6 +129,7 @@ function clearFields(){
     $("#requisitesInput").val('');
     $("#imageInput").val('');
     $("#nowPlayingInput").val('');
+    $("#searchInput").val('');
 }
 
 function getInputValues(){
@@ -154,13 +159,15 @@ function selectRelatedItems(crudeOutput, searchTerm){
     return filteredOutput;
 }
 
-function appendRetas(responseJSON, retasList){
+function appendRetas(responseJSON, retasList, privileges){
     $("#listOfRetas").empty();
     $("#listMyRetas").empty();
+    itemsId = [];
     let i = 0, cont = 0, j = numberOfCols;
     while(i < responseJSON.length){
         retasList.append(`<div class="card-deck justify-content-around" id="card-deck-${cont}"></div>`);
         while(i < responseJSON.length && i < j){
+            itemsId.push(responseJSON[i]._id);
             $("#card-deck-" + cont).append(`  
                     <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
                         <img class="card-img-top" src="${responseJSON[i].imageURL}" alt="Reta image">
@@ -169,7 +176,7 @@ function appendRetas(responseJSON, retasList){
                             <p class="card-text">${responseJSON[i].typeOfSports}</p>
                             <p class="card-text">${responseJSON[i].cost}</p>    
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer" id="card-footer-${i}">
                             <small class="text-muted">${responseJSON[i].city}</small>
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="sw-${i}">
@@ -179,6 +186,14 @@ function appendRetas(responseJSON, retasList){
                     </div>`    
             );
             $("#sw-" + i).prop('checked', responseJSON[i].nowPlaying);
+            if(privileges){
+                $("#card-footer-" + i).append(`<button id="deleteBtn-${i}" class="btnDelete" type="button" class="btn btn-fmr">
+                                                    <span id="deleteIcon-${i}" class="fa fa-trash"></span>
+                                               </button>
+                                               <button id="editBtn-${i}" class="btnEdit" type="button" class="btn btn-fmr">
+                                                    <span id="editIcon-${i}" class="fa fa-edit"></span>
+                                               </button>`);
+            }
             i++;
         }
         j += numberOfCols;
@@ -221,6 +236,17 @@ function clickListeners(){
         e.preventDefault();
         hideSections();
         $(".detailsSection").show();
+    });
+
+    $("#listMyRetas").on("click", ".btnDelete", function(e){
+        e.preventDefault();
+        let index = (e.target.id).substr(11);
+        deleteReta(itemsId[index]);
+    });
+
+    $("#listMyRetas").on("click", ".btnEdit", function(e){
+        e.preventDefault();
+        let index = (e.target.id).substr(9);
     });
 
     $("#btnLogin").on("click", function(e){
@@ -278,10 +304,10 @@ function getAllRetas(isFilteredOutput){
         success : function(responseJSON){
             console.log("Success on getting all retas");
             if(isFilteredOutput){
-                appendRetas(selectRelatedItems(responseJSON, isFilteredOutput), $("#listOfRetas"));
+                appendRetas(selectRelatedItems(responseJSON, isFilteredOutput), $("#listOfRetas"), false);
             }
             else{
-                appendRetas(responseJSON, $("#listOfRetas"));
+                appendRetas(responseJSON, $("#listOfRetas"), false);
             }
         }, 
         error: function(err){
@@ -299,7 +325,7 @@ function getMyRetas(){
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting my retas size = " + responseJSON.length );
-            appendRetas(responseJSON, $("#listMyRetas"))
+            appendRetas(responseJSON, $("#listMyRetas"), true)
         }, 
         error: function(err){
             console.log("error");
@@ -316,7 +342,7 @@ function getFilteredRetas(filter){
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting retas by city = " + responseJSON.length );
-            appendRetas(responseJSON, $("#listOfRetas"));
+            appendRetas(responseJSON, $("#listOfRetas"), false);
         }, 
         error: function(err){
             console.log("error");
@@ -374,20 +400,20 @@ function postNewReta(){
     });
 }
 
-// function deleteById(tempId){
-//     console.log(tempId);
-//     $.ajax({
-//         url:(url + '/blog-posts/' + tempId), //url/endpointToAPI,
-//         type: "DELETE",
-//         success : function(res){
-//             console.log('success on deleting');
-//             getAllBlogs();
-//         },
-//         error : function(err){
-//             console.log('error on deleting');
-//         }
-//     });
-// }
+function deleteReta(tempId){
+    console.log("deleting = " + tempId);
+    $.ajax({
+        url:(url + '/deleteReta/' + tempId), //url/endpointToAPI,
+        type: "DELETE",
+        success : function(res){
+            console.log('success on deleting');
+            getMyRetas();
+        },
+        error : function(err){
+            console.log('error on deleting');
+        }
+    });
+}
 
 // function updateById(tempId, updBlog){
 //     console.log(tempId);
@@ -398,7 +424,7 @@ function postNewReta(){
 //         data: JSON.stringify(updBlog),
 //         contentType: "application/json; charset=utf-8",
 //         success : function(response){
-//             getAllBlogs();
+//             getMyRetas();
 //         }
 //     });
 // }

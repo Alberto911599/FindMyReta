@@ -1,6 +1,8 @@
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
+
+
 let placeSchema = mongoose.Schema({
     location : {type : String},
     city : {type : String},
