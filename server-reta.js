@@ -50,7 +50,7 @@ app.get('/api/myRetas/:username', ( req, res, next ) => {
 		});
 });
 
-app.get('/api/allRetas/:city', ( req, res, next ) => {
+app.get('/api/allRetas/byCity/:city', ( req, res, next ) => {
     console.log("Getting retas by city in server");
     let filter = {city : req.params.city};
 	PlaceList.getMyRetas(filter)

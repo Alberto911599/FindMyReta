@@ -152,7 +152,7 @@ function clickListeners(){
         e.preventDefault();
         hideSections();
         $(".allRetasSection").show();
-        getFilteredRetas(currentUser.city);
+        getFilteredRetas("byCity/" + currentUser.city);
     });
 
     $("#listOfRetas").on("click", ".card-img-top", function(e){
