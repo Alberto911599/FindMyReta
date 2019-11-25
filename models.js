@@ -8,7 +8,7 @@ let placeSchema = mongoose.Schema({
     typeOfSports : {type : String},
     cost : {type : String},
     requisites : {type : String},
-    nowPlaying : {type : String},
+    nowPlaying : {type : Boolean},
     imageURL: { type : String },
     username : { type : String },
     likes : {type : Number},

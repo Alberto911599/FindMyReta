@@ -14,7 +14,7 @@ let myNewReta = {
     typeOfSports : "",
     cost : "",
     requisites : "",
-    nowPlaying : "",
+    nowPlaying : false,
     imageURL: "",
     username : "",
     likes : 0,
@@ -31,7 +31,7 @@ let numberOfCols = 4;
 
 // image downsize parameters
 let WIDTH = 200;
-let HEIGHT = 150;
+let HEIGHT = 130;
 let encoderOptions = 0.90;
 
 // google maps api autocomplete
@@ -53,9 +53,11 @@ function encodeImageFileAsURL(element) {
     let reader = new FileReader();
     reader.onloadend = function() {
         let image = new Image();
+        image.width = WIDTH*2;
+        image.height = HEIGHT*2;
         image.src = reader.result; 
         image.onload = function(){
-            // imageURL = downscaleImage(image);
+            $("#imageDiv").append(image);
             myNewReta.imageURL = downscaleImage(image)
         }
     }
@@ -129,14 +131,28 @@ function getInputValues(){
     myNewReta.typeOfSports =  $("#typeOfSportsInput").val();
     myNewReta.cost = $("#costInput").val();
     myNewReta.requisites = $("#requisitesInput").val();
-    myNewReta.nowPlaying = $("#nowPlayingInput").val();
+    myNewReta.nowPlaying = $("#nowPlayingInput").is(':checked');
 }
 
 function clickListeners(){
 
+    // $("#test").on("click", function(e){
+    //     e.preventDefault();
+    //     getInputValues();
+    // });
+
+    $("#filterCurrentlyActive").on("click", function(e){
+        e.preventDefault();
+        hideSections();
+        $(".allRetasSection").show();
+        getFilteredRetas("currentlyActive");
+    });
+
     $("#filterMyCity").on("click", function(e){
         e.preventDefault();
-        getRetasByCity();
+        hideSections();
+        $(".allRetasSection").show();
+        getFilteredRetas(currentUser.city);
     });
 
     $("#listOfRetas").on("click", ".card-img-top", function(e){
@@ -263,7 +279,10 @@ function getMyRetas(){
                                 </div>
                                 <div class="card-footer">
                                     <small class="text-muted">${responseJSON[i].city}</small>
-                                    <small class="text-muted">${responseJSON[i].nowPlaying}</small>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="sw-${i}">
+                                        <label class="custom-control-label" for="sw-${i}">Currently Active</label>
+                                    </div>
                                 </div>
                             </div>`    
                     );
@@ -279,19 +298,19 @@ function getMyRetas(){
     });
 }
 
-function getRetasByCity(){
+function getFilteredRetas(filter){
     $.ajax({
-        url:(url + "/allRetas/" + currentUser.city), //url/endpointToAPI,
+        url:(url + "/allRetas/" + filter), //url/endpointToAPI,
         method: "GET", 
         data: {}, //Info sent to the API
         dataType : "json", //Returned type od the response
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting retas by city = " + responseJSON.length );
-            $("#listMyRetas").empty();
+            $("#listOfRetas").empty();
             let i = 0, cont = 0, j = numberOfCols;
             while(i < responseJSON.length){
-                $("#listMyRetas").append(`<div class="card-deck justify-content-around" id="card-deck-mr-${cont}"></div>`);
+                $("#listOfRetas").append(`<div class="card-deck justify-content-around" id="card-deck-mr-${cont}"></div>`);
                 while(i < responseJSON.length && i < j){
                     $("#card-deck-mr-" + cont).append(`  
                             <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
@@ -301,8 +320,11 @@ function getRetasByCity(){
                                     <p class="card-text">${responseJSON[i].requisites}</p>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">${responseJSON[i].city}</small>
-                                    <small class="text-muted">${responseJSON[i].nowPlaying}</small>
+                                <small class="text-muted">${responseJSON[i].city}</small>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="sw-${i}">
+                                        <label class="custom-control-label" for="sw-${i}">Currently Active</label>
+                                    </div>
                                 </div>
                             </div>`    
                     );

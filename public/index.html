@@ -67,7 +67,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 m-auto">
-                            <h1 class="text-center display-4 my-4">FindMyReta</h1>
+                            <img class="d-flex justify-content-center" id="tempImage" src="icon_fmr.jpg" alt="Choose Image" style="width:100%">
                             <form enctype="multipart/form-data">
                                 <div class="custom-file mb-3">
                                     <input type="file" name="file" id="file" class="custom-file-input" onchange="encodeImageFileAsURL(this)"/>
@@ -76,21 +76,53 @@
                             </form>
                         </div>
                     </div>
-                </div>        
-                <form>
-                    <label>
-                        Add Reta
-                    </label>
-                    <input id="nameInput" class="form-control" type="text" placeholder="Name of the place">
-                    <input id="locationInput" class="form-control" type="text" onFocus="geolocate()" placeholder="Location">
-                    <input id="typeOfSportsInput" class="form-control" type="text" placeholder="Sports">
-                    <input id="costInput" class="form-control" type="text" placeholder="Costs">
-                    <input id="requisitesInput" class="form-control" type="text" placeholder="Requisites">
-                    <input id="nowPlayingInput" class="form-control" type="text" placeholder="Now Playing">
-                    <button id="btnAddReta" type="button">
-                        Add Reta
-                    </button>
-                </form>
+                    <div class="row">
+                        <div class="col-md-6 m-auto d-flex justify-content-center">
+                            <div class="thumbnail mb-3" id="imageDiv">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 m-auto">
+                            <input id="nameInput" class="form-control mb-3" type="text" placeholder="Name of the place">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 m-auto">
+                            <input id="locationInput" class="form-control mb-3" type="text" onFocus="geolocate()" placeholder="Location">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 m-auto">
+                            <input id="typeOfSportsInput" class="form-control mb-3" type="text" placeholder="Sports">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 m-auto">
+                            <input id="costInput" class="form-control mb-3" type="text" placeholder="Costs">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 m-auto">
+                            <input id="requisitesInput" class="form-control mb-3" type="text" placeholder="Requisites">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 m-auto">
+                            <div class="custom-control custom-switch">
+                                <input id="nowPlayingInput" class="custom-control-input mb-3" type="checkbox">
+                                <label class="custom-control-label" for="nowPlayingInput">Currently Active</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 m-auto d-flex justify-content-center">
+                            <button id="btnAddReta" type="submit" class="btn btn-fmr mb-4">
+                                AddReta
+                            </button>
+                        </div>
+                    </div>
+                </div>      
             </section>
 
             <section class="allRetasSection">   
