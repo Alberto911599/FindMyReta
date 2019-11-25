@@ -52,7 +52,7 @@ app.get('/api/myRetas/:username', ( req, res, next ) => {
 
 app.post('/api/postPlace', jsonParser, (req, res) => {
     console.log("Posting new place");
-    if(!req.body.location || !req.body.typeOfSports || !req.body.cost){
+    if(!req.body.name || !req.body.location || !req.body.typeOfSports || !req.body.cost){
         res.statusMessage = "Missing field in place form";
         return res.status(406).json({
            "error" : "Missing field",

@@ -10,6 +10,7 @@ let url = 'https://vast-forest-34191.herokuapp.com/api';
 let myNewReta = {
     location : "",
     city : "",
+    name : "",
     typeOfSports : "",
     cost : "",
     requisites : "",
@@ -108,6 +109,7 @@ function hideSections(){
 
 function clearFields(){
     $("#locationInput").val('');
+    $("#nameInput").val('');
     $("#typeOfSportsInput").val('');
     $("#costInput").val('');
     $("#requisitesInput").val('');
@@ -117,6 +119,7 @@ function clearFields(){
 
 function getInputValues(){
     myNewReta.location = $("#locationInput").val();
+    myNewReta.name = $("#nameInput").val();
     myNewReta.typeOfSports =  $("#typeOfSportsInput").val();
     myNewReta.cost = $("#costInput").val();
     myNewReta.requisites = $("#requisitesInput").val();
@@ -188,12 +191,16 @@ function getAllRetas(){
                             <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
                                 <img class="card-img-top" src="${responseJSON[i].imageURL}" alt="Reta image">
                                 <div class="card-body">
-                                    <h5 class="card-title">${responseJSON[i].typeOfSports}</h5>
-                                    <p class="card-text">${responseJSON[i].requisites}</p>
+                                    <h5 class="card-title">${responseJSON[i].name}</h5>
+                                    <p class="card-text">${responseJSON[i].typeOfSports}</p>
+                                    <p class="card-text">${responseJSON[i].cost}</p>    
                                 </div>
                                 <div class="card-footer">
                                     <small class="text-muted">${responseJSON[i].city}</small>
-                                    <small class="text-muted">${responseJSON[i].nowPlaying}</small>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio1">Currently Active</label>
+                                    </div>
                                 </div>
                             </div>`    
                     );
@@ -287,7 +294,9 @@ function postNewReta(){
         data: JSON.stringify(myNewReta),
         contentType: "application/json; charset=utf-8",
         success : function(result){
-            console.log("Success posting new reta")
+            console.log("Success posting new reta");
+            hideSections();
+            $("allRetasSection").show();
             getAllRetas();
         },
         error : function(err){
