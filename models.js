@@ -76,6 +76,7 @@ let PlaceList = {
         console.log("Place Put");
         return Place.updateOne(filer, updatedInfo)
                 .then( place => {
+                    console.log(place);
                     return place;
                 })
                 .catch( err=> {
