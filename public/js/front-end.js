@@ -232,6 +232,7 @@ function selectFieldsToUpdate(){
         if(myNewReta[updatableFields[i]]){
             field = updatableFields[i];
             value = myNewReta[updatableFields[i]];
+            console.log(field);
             updateReta(index, {field : value});
         }
     }
@@ -286,9 +287,9 @@ function clickListeners(){
         e.preventDefault();
         index = (e.target.id).substr(9);
         hideSections();
-        $(".addRetaSection").hide();
+        $(".addRetaSection").show();
         $("#btnUpdateReta").show();
-        $("#btnAddReta").show();
+        $("#btnAddReta").hide();
     });
 
     $("#btnLogin").on("click", function(e){
