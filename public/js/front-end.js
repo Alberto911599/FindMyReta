@@ -7,15 +7,15 @@ let url = 'https://vast-forest-34191.herokuapp.com/api';
 
 // new place to add
 let myNewReta = {
-    location : "",
-    city : "",
-    name : "",
-    typeOfSports : "",
-    cost : "",
-    requisites : "",
+    location : null,
+    city : null,
+    name : null,
+    typeOfSports : null,
+    cost : null,
+    requisites : null,
     nowPlaying : false,
-    imageURL: "",
-    username : "",
+    imageURL: null,
+    username : null,
     likes : 0,
     assistants : 0
 }
@@ -26,11 +26,16 @@ let currentUser = {
     city : ""
 }
 
+let updatableFields = ["location", "name", "typeOfSports", "cost", "requisites", "nowPlaying", "imageURL"];
+
 // these are the fields used in search by term
 let searchableFields = ["location", "name", "typeOfSports", "cost", "requisites"];
 
 // This array stores the id of each of the items currently showed
 let itemsId = [];
+
+// The index holds the element to update or delete
+let index = -1;
 
 // esta variable permite llevar un control del grid
 let numberOfCols = 4;
@@ -127,9 +132,26 @@ function clearFields(){
     $("#typeOfSportsInput").val('');
     $("#costInput").val('');
     $("#requisitesInput").val('');
-    $("#imageInput").val('');
     $("#nowPlayingInput").val('');
     $("#searchInput").val('');
+    $("#imageDiv").empty();
+    index = -1;
+}
+
+function clearMyNewReta(){
+    myNewReta = {
+        location : null,
+        city : null,
+        name : null,
+        typeOfSports : null,
+        cost : null,
+        requisites : null,
+        nowPlaying : false,
+        imageURL: null,
+        username : null,
+        likes : 0,
+        assistants : 0
+    }
 }
 
 function getInputValues(){
@@ -201,6 +223,20 @@ function appendRetas(responseJSON, retasList, privileges){
     }
 }
 
+function selectFieldsToUpdate(){
+    if(index == -1){
+        return;
+    }
+    let field, value;
+    for(let i = 0; i < updatableFields.length; i++){
+        if(myNewReta[updatableFields[i]]){
+            field = updatableFields[i];
+            value = myNewReta[updatableFields[i]];
+            updateReta(index, {field : value});
+        }
+    }
+}
+
 function clickListeners(){
 
     $("#btnSearch").on("click", function(e){
@@ -240,13 +276,19 @@ function clickListeners(){
 
     $("#listMyRetas").on("click", ".btnDelete", function(e){
         e.preventDefault();
-        let index = (e.target.id).substr(11);
-        deleteReta(itemsId[index]);
+        index = (e.target.id).substr(11);
+        if(index >= 0){
+            deleteReta(itemsId[index]);
+        }
     });
 
     $("#listMyRetas").on("click", ".btnEdit", function(e){
         e.preventDefault();
-        let index = (e.target.id).substr(9);
+        index = (e.target.id).substr(9);
+        hideSections();
+        $(".addRetaSection").hide();
+        $("#btnUpdateReta").show();
+        $("#btnAddReta").show();
     });
 
     $("#btnLogin").on("click", function(e){
@@ -261,7 +303,7 @@ function clickListeners(){
         hideSections();
         $(".allRetasSection").show();
         getAllRetas(null);
-        console.log("These are my retas");;
+        console.log("These are all the retas");;
     });
 
     $('#linkMyRetas').on("click", function(e){
@@ -276,6 +318,8 @@ function clickListeners(){
         e.preventDefault();
         hideSections();
         $(".addRetaSection").show();
+        $("#btnUpdateReta").hide();
+        $("#btnAddReta").show();
         console.log("Add Reta Section");
     });
 
@@ -283,6 +327,12 @@ function clickListeners(){
         e.preventDefault();
         getInputValues();
         postNewReta();
+    });
+
+    $("#btnUpdReta").on("click", function(e){
+        e.preventDefault();
+        getInputValues();
+        selectFieldsToUpdate();
     });
 }
 
@@ -393,6 +443,8 @@ function postNewReta(){
             hideSections();
             $(".allRetasSection").show();
             getAllRetas(null);
+            clearFields();
+            clearMyNewReta();
         },
         error : function(err){
             console.log(err);
@@ -415,18 +467,19 @@ function deleteReta(tempId){
     });
 }
 
-// function updateById(tempId, updBlog){
-//     console.log(tempId);
-//     console.log(updBlog);
-//     $.ajax({
-//         url:(url + '/blog-posts/' + tempId), //url/endpointToAPI,
-//         type: "PUT", 
-//         data: JSON.stringify(updBlog),
-//         contentType: "application/json; charset=utf-8",
-//         success : function(response){
-//             getMyRetas();
-//         }
-//     });
-// }
+function updateReta(tempId, fieldToUpd){
+    console.log("Updating reta with id = " + tempId);
+    $.ajax({
+        url:(url + '/updateReta/' + tempId), //url/endpointToAPI,
+        type: "PUT", 
+        data: JSON.stringify(fieldToUpd),
+        contentType: "application/json; charset=utf-8",
+        success : function(response){
+            clearFields();
+            clearMyNewReta();
+            getMyRetas();
+        }
+    });
+}
 
 init();
