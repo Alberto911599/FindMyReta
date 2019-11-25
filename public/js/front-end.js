@@ -330,7 +330,7 @@ function clickListeners(){
         postNewReta();
     });
 
-    $("#btnUpdReta").on("click", function(e){
+    $("#btnUpdateReta").on("click", function(e){
         e.preventDefault();
         getInputValues();
         selectFieldsToUpdate();
