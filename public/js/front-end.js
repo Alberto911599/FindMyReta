@@ -233,7 +233,8 @@ function selectFieldsToUpdate(){
             field = updatableFields[i];
             value = myNewReta[updatableFields[i]];
             console.log(field);
-            updateReta(index, {field : value});
+            console.log("this is the weird id = " + itemsId[index]);
+            updateReta(itemsId[index], {field : value});
         }
     }
 }
