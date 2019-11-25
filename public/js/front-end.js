@@ -31,7 +31,7 @@ let updatableFields = ["location", "name", "typeOfSports", "cost", "requisites",
 let tempJson = [
                     {"location" : "" },
                     {"name" : ""},
-                    {"typeOfSports"},
+                    {"typeOfSports" : ""},
                     {"cost" : ""},
                     {"requisites" : ""},
                     {"nowPlaying" : ""},
