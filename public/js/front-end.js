@@ -477,6 +477,8 @@ function updateReta(tempId, fieldToUpd){
         data: JSON.stringify(fieldToUpd),
         contentType: "application/json; charset=utf-8",
         success : function(response){
+            hideSections();
+            $(".myRetasSection").show();
             clearFields();
             clearMyNewReta();
             getMyRetas();

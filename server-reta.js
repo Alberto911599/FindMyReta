@@ -107,13 +107,14 @@ app.post('/api/postPlace', jsonParser, (req, res) => {
 
 app.put('/api/updateReta/:id', jsonParser, (req, res, next) => {
     let filterID = req.params.id;
-    if(!filterID || !req.body){
+    if(!filterID){
         res.statusMessage = "Missing field id";
         return res.status(406).json({
            "error" : "Missing id",
            "status" : 406
        });
     }
+    console.log(req.body);
     PlaceList.put({ _id : filterID }, req.body)
        .then(place => {
            res.status(201).json(place);
