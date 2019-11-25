@@ -28,6 +28,16 @@ let currentUser = {
 
 let updatableFields = ["location", "name", "typeOfSports", "cost", "requisites", "nowPlaying", "imageURL"];
 
+let tempJson = [
+                    {"location" : "" },
+                    {"name" : ""},
+                    {"typeOfSports"},
+                    {"cost" : ""},
+                    {"requisites" : ""},
+                    {"nowPlaying" : ""},
+                    {"imageURL" : ""}
+                ];
+
 // these are the fields used in search by term
 let searchableFields = ["location", "name", "typeOfSports", "cost", "requisites"];
 
@@ -230,11 +240,8 @@ function selectFieldsToUpdate(){
     let field, value;
     for(let i = 0; i < updatableFields.length; i++){
         if(myNewReta[updatableFields[i]]){
-            field = updatableFields[i];
-            value = myNewReta[updatableFields[i]];
-            console.log(field);
-            console.log("this is the weird id = " + itemsId[index]);
-            updateReta(itemsId[index], {field : value});
+            tempJson[i][updatableFields[i]] = myNewReta[updatableFields[i]];
+            updateReta(itemsId[index], tempJson[i]);
         }
     }
 }
