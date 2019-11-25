@@ -370,7 +370,7 @@ function getAllRetas(isFilteredOutput){
 
 function getMyRetas(){
     $.ajax({
-        url:(url + "/myRetas/" + myNewReta.username), //url/endpointToAPI,
+        url:(url + "/myRetas/" + currentUser.username), //url/endpointToAPI,
         method: "GET", 
         data: {}, //Info sent to the API
         dataType : "json", //Returned type od the response
