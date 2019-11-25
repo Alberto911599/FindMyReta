@@ -26,6 +26,8 @@ let currentUser = {
     city : ""
 }
 
+let searchableFields = ["location", "name", "typeOfSports", "cost", "requisites"];
+
 // esta variable permite llevar un control del grid
 let numberOfCols = 4;
 
@@ -134,12 +136,66 @@ function getInputValues(){
     myNewReta.nowPlaying = $("#nowPlayingInput").is(':checked');
 }
 
+function isRelated(searchTerm, jsonCandidate){
+    for(let i = 0; i < searchableFields.length; i++){
+        if(jsonCandidate[searchableFields[i]].includes(searchTerm))
+            return true;
+    }
+    return false;
+}
+
+function selectRelatedItems(crudeOutput, searchTerm){
+    let filteredOutput = [];
+    for(let i = 0; i < crudeOutput.length; i++){
+        if(isRelated(searchTerm, crudeOutput[i])){
+            filteredOutput.push(crudeOutput[i]);
+        }
+    }
+    return filteredOutput;
+}
+
+function appendRetas(responseJSON, retasList){
+    $("#listOfRetas").empty();
+    $("#listMyRetas").empty();
+    let i = 0, cont = 0, j = numberOfCols;
+    while(i < responseJSON.length){
+        retasList.append(`<div class="card-deck justify-content-around" id="card-deck-${cont}"></div>`);
+        while(i < responseJSON.length && i < j){
+            $("#card-deck-" + cont).append(`  
+                    <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
+                        <img class="card-img-top" src="${responseJSON[i].imageURL}" alt="Reta image">
+                        <div class="card-body">
+                            <h5 class="card-title">${responseJSON[i].name}</h5>
+                            <p class="card-text">${responseJSON[i].typeOfSports}</p>
+                            <p class="card-text">${responseJSON[i].cost}</p>    
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">${responseJSON[i].city}</small>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="sw-${i}">
+                                <label class="custom-control-label" for="sw-${i}">Currently Active</label>
+                            </div>
+                        </div>
+                    </div>`    
+            );
+            $("#sw-" + i).prop('checked', responseJSON[i].nowPlaying);
+            i++;
+        }
+        j += numberOfCols;
+        cont++;
+    }
+}
+
 function clickListeners(){
 
-    // $("#test").on("click", function(e){
-    //     e.preventDefault();
-    //     getInputValues();
-    // });
+    $("#btnSearch").on("click", function(e){
+        e.preventDefault();
+        let searchTerm = $("#searchInput").val();
+        getAllRetas(searchTerm);
+        hideSections();
+        $(".allRetasSection").show();
+        console.log("Searching for " + searchTerm);
+    });
 
     $("#filterCurrentlyActive").on("click", function(e){
         e.preventDefault();
@@ -178,7 +234,7 @@ function clickListeners(){
         e.preventDefault();
         hideSections();
         $(".allRetasSection").show();
-        getAllRetas();
+        getAllRetas(null);
         console.log("These are my retas");;
     });
 
@@ -212,7 +268,7 @@ function init(){
     $(".loginSection").show();
 }
 
-function getAllRetas(){
+function getAllRetas(isFilteredOutput){
     $.ajax({
         url:(url + "/allRetas"), //url/endpointToAPI,
         method: "GET", 
@@ -221,34 +277,12 @@ function getAllRetas(){
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting all retas");
-            $("#listOfRetas").empty();
-            let i = 0, cont = 0, j = numberOfCols;
-            while(i < responseJSON.length){
-                $("#listOfRetas").append(`<div class="card-deck justify-content-around" id="card-deck-${cont}"></div>`);
-                while(i < responseJSON.length && i < j){
-                    $("#card-deck-" + cont).append(`  
-                            <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
-                                <img class="card-img-top" src="${responseJSON[i].imageURL}" alt="Reta image">
-                                <div class="card-body">
-                                    <h5 class="card-title">${responseJSON[i].name}</h5>
-                                    <p class="card-text">${responseJSON[i].typeOfSports}</p>
-                                    <p class="card-text">${responseJSON[i].cost}</p>    
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">${responseJSON[i].city}</small>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="sw-${i}">
-                                        <label class="custom-control-label" for="sw-${i}">Currently Active</label>
-                                    </div>
-                                </div>
-                            </div>`    
-                    );
-                    i++;
-                }
-                j += numberOfCols;
-                cont++;
+            if(isFilteredOutput){
+                appendRetas(selectRelatedItems(responseJSON, isFilteredOutput), $("#listOfRetas"));
             }
-            clearFields();
+            else{
+                appendRetas(responseJSON, $("#listOfRetas"));
+            }
         }, 
         error: function(err){
             console.log("error");
@@ -265,32 +299,7 @@ function getMyRetas(){
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting my retas size = " + responseJSON.length );
-            $("#listMyRetas").empty();
-            let i = 0, cont = 0, j = numberOfCols;
-            while(i < responseJSON.length){
-                $("#listMyRetas").append(`<div class="card-deck justify-content-around" id="card-deck-mr-${cont}"></div>`);
-                while(i < responseJSON.length && i < j){
-                    $("#card-deck-mr-" + cont).append(`  
-                            <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
-                                <img class="card-img-top" src="${responseJSON[i].imageURL}" alt="Reta image">
-                                <div class="card-body">
-                                    <h5 class="card-title">${responseJSON[i].typeOfSports}</h5>
-                                    <p class="card-text">${responseJSON[i].requisites}</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">${responseJSON[i].city}</small>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="sw-${i}">
-                                        <label class="custom-control-label" for="sw-${i}">Currently Active</label>
-                                    </div>
-                                </div>
-                            </div>`    
-                    );
-                    i++;
-                }
-                j += numberOfCols;
-                cont++;
-            }
+            appendRetas(responseJSON, $("#listMyRetas"))
         }, 
         error: function(err){
             console.log("error");
@@ -307,32 +316,7 @@ function getFilteredRetas(filter){
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting retas by city = " + responseJSON.length );
-            $("#listOfRetas").empty();
-            let i = 0, cont = 0, j = numberOfCols;
-            while(i < responseJSON.length){
-                $("#listOfRetas").append(`<div class="card-deck justify-content-around" id="card-deck-mr-${cont}"></div>`);
-                while(i < responseJSON.length && i < j){
-                    $("#card-deck-mr-" + cont).append(`  
-                            <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
-                                <img class="card-img-top" src="${responseJSON[i].imageURL}" alt="Reta image">
-                                <div class="card-body">
-                                    <h5 class="card-title">${responseJSON[i].typeOfSports}</h5>
-                                    <p class="card-text">${responseJSON[i].requisites}</p>
-                                </div>
-                                <div class="card-footer">
-                                <small class="text-muted">${responseJSON[i].city}</small>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="sw-${i}">
-                                        <label class="custom-control-label" for="sw-${i}">Currently Active</label>
-                                    </div>
-                                </div>
-                            </div>`    
-                    );
-                    i++;
-                }
-                j += numberOfCols;
-                cont++;
-            }
+            appendRetas(responseJSON, $("#listOfRetas"));
         }, 
         error: function(err){
             console.log("error");
@@ -359,7 +343,7 @@ function getUser(username, password){
                 hideSections();
                 $(".homeSection").show();
                 $(".allRetasSection").show();
-                getAllRetas();
+                getAllRetas(null);
             }
             clearFields();
 
@@ -382,7 +366,7 @@ function postNewReta(){
             console.log("Success posting new reta");
             hideSections();
             $(".allRetasSection").show();
-            getAllRetas();
+            getAllRetas(null);
         },
         error : function(err){
             console.log(err);
