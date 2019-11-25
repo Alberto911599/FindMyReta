@@ -128,6 +128,7 @@ app.put('/api/updatePlace/:id', jsonParser, (req, res, next) => {
 });
 
 app.delete('/api/deleteReta/:id', (req, res) => {
+    console.log("deleting");
     let filterID = req.params.id;
     console.log("deleting " + filterID);
     if(!filterID){
