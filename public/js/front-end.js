@@ -247,7 +247,7 @@ function selectFieldsToUpdate(){
 }
 
 function fillDetails(responseJSON){
-
+    console.log("updating details = " + responseJSON);
     $("#imageDetails").src = responseJSON.imageURL;
     $("#nameDetails").val(responseJSON.name);
     $("#locationDetails").val(responseJSON.location);
