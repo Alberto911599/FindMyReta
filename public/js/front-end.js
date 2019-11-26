@@ -329,7 +329,6 @@ function clickListeners(){
     $(".sec").on("click", ".sw", function(e){
         e.preventDefault();
         let i = (e.target.id).substr(3);
-        hideSections();
         updateState(itemsId[i], $("#sw-"+i).is(':checked'));
     });
 
@@ -397,6 +396,14 @@ function clickListeners(){
         $("#btnUpdateReta").hide();
         $("#btnAddReta").show();
         console.log("Add Reta Section");
+    });
+
+    $('#linkLogOut').on("click", function(e){
+        e.preventDefault();
+        hideSections();
+        $(".homeSection").hide();
+        $(".loginSection").show();
+        console.log("LogOut");
     });
 
     $("#btnAddReta").on("click", function(e){
