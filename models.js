@@ -56,7 +56,6 @@ let PlaceList = {
         console.log("Getting retas by id");
         return Place.findById(id)
             .then( places => {
-                console.log(places);
                 return places;
             })
             .catch( error => {

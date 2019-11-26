@@ -247,6 +247,7 @@ function selectFieldsToUpdate(){
 }
 
 function fillDetails(responseJSON){
+
     $("#imageDetails").src = responseJSON.imageURL;
     $("#nameDetails").val(responseJSON.name);
     $("#locationDetails").val(responseJSON.location);
@@ -413,7 +414,7 @@ function getRetaById(filter){
         dataType : "json", //Returned type od the response
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
-            console.log("Success on getting retas by id = " + responseJSON.length );
+            console.log("Success on getting retas by id = " + filter );
             fillDetails(responseJSON);
         }, 
         error: function(err){
