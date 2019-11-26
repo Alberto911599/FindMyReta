@@ -51,9 +51,9 @@ let index = -1;
 let numberOfCols = 4;
 
 // image downsize parameters
-let WIDTH = 400;
+let WIDTH = 350;
 let HEIGHT = 200;
-let encoderOptions = 1;
+let encoderOptions = 0.95;
 
 // google maps api autocomplete
 let autocomplete;
