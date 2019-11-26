@@ -8,6 +8,10 @@
     padding: 20px;
 }  
 
+#detailsCard{
+    display: inline-block;
+}
+
 .btn-fmr{
     background-color:  #990033;
     color: white;
@@ -21,4 +25,4 @@
 #icon {
     padding-top: 20px;
     padding-bottom: 20px;
-}
+}   

@@ -247,14 +247,13 @@ function selectFieldsToUpdate(){
 }
 
 function fillDetails(responseJSON){
-    console.log("updating details = " + responseJSON);
-    $("#imageDetails").src = responseJSON.imageURL;
-    $("#nameDetails").val(responseJSON.name);
-    $("#locationDetails").val(responseJSON.location);
-    $("#costDetails").val(responseJSON.cost);
-    $("#requisitesDetails").val(responseJSON.requisites);
-    $("#assistantsNumber").val(responseJSON.assistants + "");
-    $("#likesNumber").val(responseJSON.likes + "");
+    $("#imageDetails").attr("src", responseJSON.imageURL).height(200).width(400);
+    $("#nameDetails").text(responseJSON.name);
+    $("#locationDetails").text(responseJSON.location);
+    $("#costDetails").text( responseJSON.cost);
+    $("#requisitesDetails").text( responseJSON.requisites);
+    $("#assistantsNumber").text( responseJSON.assistants);
+    $("#likesNumber").text( responseJSON.likes);
 }
 
 function clickListeners(){
@@ -281,6 +280,22 @@ function clickListeners(){
         $(".allRetasSection").show();
         getFilteredRetas("byCity/" + currentUser.city);
     });
+    
+    $("#likeReta").on("click", function(e){
+        e.preventDefault();
+        myNewReta.likes += 1;
+        let temp = {likes : myNewReta.likes};
+        updateReta(itemsId[index], temp);
+        fillDetails(myNewReta);
+    });
+
+    $("#confirmAssistance").on("click", function(e){
+        e.preventDefault();
+        myNewReta.assistants += 1;
+        let temp = {assistants : myNewReta.assistants};
+        updateReta(itemsId[index], temp);
+        fillDetails(myNewReta);
+    });
 
     $("#listOfRetas").on("click", ".card-img-top", function(e){
         e.preventDefault();
@@ -295,6 +310,7 @@ function clickListeners(){
         index = (e.target.id).substr(4);
         hideSections();
         $(".detailsSection").show();
+        getRetaById(itemsId[index]);
     });
 
     $("#listMyRetas").on("click", ".btnDelete", function(e){
@@ -415,7 +431,8 @@ function getRetaById(filter){
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting retas by id = " + filter );
-            console.log("response is = " + responseJSON);
+            console.log("response is = " + responseJSON.location);
+            myNewReta = responseJSON;
             fillDetails(responseJSON);
         }, 
         error: function(err){
