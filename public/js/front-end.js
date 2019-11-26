@@ -258,6 +258,11 @@ function fillDetails(responseJSON){
     $("#requisitesDetails").text( responseJSON.requisites);
     $("#assistantsNumber").text( responseJSON.assistants);
     $("#likesNumber").text( responseJSON.likes);
+    let listOfGames = responseJSON.typeOfSports.split(', ');
+    for(let i = 0; i < listOfGames.length; i++){
+        $("#sportsList").append(`<li class="list-group-item">${listOfGames[i]}</li>`);
+    }
+    
 }
 
 function clickListeners(){
