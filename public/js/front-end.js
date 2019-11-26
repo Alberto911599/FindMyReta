@@ -51,8 +51,8 @@ let index = -1;
 let numberOfCols = 4;
 
 // image downsize parameters
-let WIDTH = 200;
-let HEIGHT = 130;
+let WIDTH = 400;
+let HEIGHT = 200;
 let encoderOptions = 1;
 
 // google maps api autocomplete
@@ -74,8 +74,8 @@ function encodeImageFileAsURL(element) {
     let reader = new FileReader();
     reader.onloadend = function() {
         let image = new Image();
-        image.width = WIDTH*2;
-        image.height = HEIGHT*2;
+        image.width = WIDTH;
+        image.height = HEIGHT;
         image.src = reader.result; 
         image.onload = function(){
             $("#imageDiv").append(image);

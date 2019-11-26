@@ -9,7 +9,11 @@
 }  
 
 #detailsCard{
-    display: inline-block;
+    display: inline-block;  
+}
+
+#bodyDetails{
+    max-width: 400px;
 }
 
 .btn-fmr{
