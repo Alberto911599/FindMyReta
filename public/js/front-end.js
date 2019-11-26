@@ -525,7 +525,7 @@ function updateUsersAssistRetas(tempId){
     let fieldToUpd = { assistRetas : currentUser.assistRetas };
     console.log("Updating liked retas of users id = " + tempId);
     $.ajax({
-        url:(url + '/addLikedReta/' + tempId), //url/endpointToAPI,
+        url:(url + '/addAssistReta/' + tempId), //url/endpointToAPI,
         type: "PUT", 
         data: JSON.stringify(fieldToUpd),
         contentType: "application/json; charset=utf-8",

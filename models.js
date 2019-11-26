@@ -22,7 +22,7 @@ let userSchema = mongoose.Schema({
     password : {type : String},
     city : {type : String},
     assistRetas : [String],
-    likedtRetas : [String]
+    likedRetas : [String]
 });
 
 
