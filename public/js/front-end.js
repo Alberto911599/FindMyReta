@@ -502,6 +502,7 @@ function getUser(username, password){
                 console.log("Login success");
                 currentUser._id = responseJSON._id;
                 currentUser = responseJSON;
+                myNewReta.username = responseJSON.username;
                 hideSections();
                 $(".homeSection").show();
                 $(".allRetasSection").show();
