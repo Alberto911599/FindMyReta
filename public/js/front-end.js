@@ -251,6 +251,7 @@ function selectFieldsToUpdate(){
 }
 
 function fillDetails(responseJSON){
+    $("#sportsList").empty();
     $("#imageDetails").attr("src", responseJSON.imageURL).height(200).width(400);
     $("#nameDetails").text(responseJSON.name);
     $("#locationDetails").text(responseJSON.location);
@@ -262,7 +263,7 @@ function fillDetails(responseJSON){
     for(let i = 0; i < listOfGames.length; i++){
         $("#sportsList").append(`<li class="list-group-item">${listOfGames[i]}</li>`);
     }
-    
+
 }
 
 function clickListeners(){
