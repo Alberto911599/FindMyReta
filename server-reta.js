@@ -66,6 +66,22 @@ app.get('/api/allRetas/byCity/:city', ( req, res, next ) => {
 		});
 });
 
+app.get('/api/allRetas/findById/:id', ( req, res, next ) => {
+    console.log("Getting retas by id in server = ");
+    let filter = {_id : req.params.id};
+	PlaceList.getRetasById(filter)
+		.then( retas => {
+			return res.status( 200 ).json( retas );
+		})
+		.catch( error => {
+			res.statusMessage = "Something went wrong with the DB. Try again later.";
+			return res.status( 500 ).json({
+				status : 500,
+				message : "Something went wrong with the DB. Try again later."
+			})
+		});
+});
+
 app.get('/api/allRetas/currentlyActive', ( req, res ) => {
     console.log("Getting active retas in server");
     let filter = {nowPlaying : true};
@@ -81,6 +97,7 @@ app.get('/api/allRetas/currentlyActive', ( req, res ) => {
 			})
 		});
 });
+
 
 app.post('/api/postPlace', jsonParser, (req, res) => {
     console.log("Posting new place");

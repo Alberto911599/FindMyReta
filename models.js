@@ -52,6 +52,17 @@ let PlaceList = {
 					throw Error( error );
 				});
     },
+    getRetaById : function(id){
+        console.log("Getting retas by id");
+        return Place.findById(id)
+            .then( places => {
+                console.log(places);
+                return places;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
     getMyRetas : function(filter){
         console.log("Getting my retas");
         return Place.find(filter)

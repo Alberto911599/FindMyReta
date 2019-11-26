@@ -22,8 +22,8 @@ let myNewReta = {
 
 // user currently logged in
 let currentUser = {
-    username : "", 
-    city : ""
+    username : null, 
+    city : null
 }
 
 let updatableFields = ["location", "name", "typeOfSports", "cost", "requisites", "nowPlaying", "imageURL"];
@@ -202,7 +202,7 @@ function appendRetas(responseJSON, retasList, privileges){
             itemsId.push(responseJSON[i]._id);
             $("#card-deck-" + cont).append(`  
                     <div class="card mb-4" style="min-width: 15rem; max-width: 15rem;">
-                        <img class="card-img-top" src="${responseJSON[i].imageURL}" alt="Reta image">
+                        <img class="card-img-top" id="img-${i}" src="${responseJSON[i].imageURL}" alt="Reta image">
                         <div class="card-body">
                             <h5 class="card-title">${responseJSON[i].name}</h5>
                             <p class="card-text">${responseJSON[i].typeOfSports}</p>
@@ -246,6 +246,16 @@ function selectFieldsToUpdate(){
     }
 }
 
+function fillDetails(responseJSON){
+    $("#imageDetails").src = responseJSON.imageURL;
+    $("#nameDetails").val(responseJSON.name);
+    $("#locationDetails").val(responseJSON.location);
+    $("#costDetails").val(responseJSON.cost);
+    $("#requisitesDetails").val(responseJSON.requisites);
+    $("#assistantsNumber").val(responseJSON.assistants + "");
+    $("#likesNumber").val(responseJSON.likes + "");
+}
+
 function clickListeners(){
 
     $("#btnSearch").on("click", function(e){
@@ -273,12 +283,15 @@ function clickListeners(){
 
     $("#listOfRetas").on("click", ".card-img-top", function(e){
         e.preventDefault();
+        index = (e.target.id).substr(4);
         hideSections();
         $(".detailsSection").show();
+        getRetaById(itemsId[index]);
     });
 
     $("#listMyRetas").on("click", ".card-img-top", function(e){
         e.preventDefault();
+        index = (e.target.id).substr(4);
         hideSections();
         $(".detailsSection").show();
     });
@@ -388,6 +401,23 @@ function getMyRetas(){
         }, 
         error: function(err){
             console.log("error");
+        }
+    });
+}
+
+function getRetaById(filter){
+    $.ajax({
+        url:(url + "/allRetas/findById/" + filter), //url/endpointToAPI,
+        method: "GET", 
+        data: {}, //Info sent to the API
+        dataType : "json", //Returned type od the response
+        ContentType : "application/json", //Type of sent data in the request (optional)
+        success : function(responseJSON){
+            console.log("Success on getting retas by id = " + responseJSON.length );
+            fillDetails(responseJSON);
+        }, 
+        error: function(err){
+            console.log("error getting by id");
         }
     });
 }
