@@ -53,7 +53,7 @@ let numberOfCols = 4;
 // image downsize parameters
 let WIDTH = 200;
 let HEIGHT = 130;
-let encoderOptions = 0.90;
+let encoderOptions = 1;
 
 // google maps api autocomplete
 let autocomplete;
@@ -241,7 +241,7 @@ function selectFieldsToUpdate(){
     for(let i = 0; i < updatableFields.length; i++){
         if(myNewReta[updatableFields[i]]){
             tempJson[i][updatableFields[i]] = myNewReta[updatableFields[i]];
-            updateReta(itemsId[index], tempJson[i]);
+            updateReta(itemsId[index], tempJson[i], true);
         }
     }
 }
@@ -285,7 +285,7 @@ function clickListeners(){
         e.preventDefault();
         myNewReta.likes += 1;
         let temp = {likes : myNewReta.likes};
-        updateReta(itemsId[index], temp);
+        updateReta(itemsId[index], temp, false);
         fillDetails(myNewReta);
     });
 
@@ -293,7 +293,7 @@ function clickListeners(){
         e.preventDefault();
         myNewReta.assistants += 1;
         let temp = {assistants : myNewReta.assistants};
-        updateReta(itemsId[index], temp);
+        updateReta(itemsId[index], temp, false);
         fillDetails(myNewReta);
     });
 
@@ -525,7 +525,7 @@ function deleteReta(tempId){
     });
 }
 
-function updateReta(tempId, fieldToUpd){
+function updateReta(tempId, fieldToUpd, home){
     console.log("Updating reta with id = " + tempId);
     $.ajax({
         url:(url + '/updateReta/' + tempId), //url/endpointToAPI,
@@ -533,11 +533,13 @@ function updateReta(tempId, fieldToUpd){
         data: JSON.stringify(fieldToUpd),
         contentType: "application/json; charset=utf-8",
         success : function(response){
-            hideSections();
-            $(".myRetasSection").show();
-            clearFields();
-            clearMyNewReta();
-            getMyRetas();
+            if(home){
+                hideSections();
+                $(".myRetasSection").show();
+                clearFields();
+                clearMyNewReta();
+                getMyRetas();
+            }
         }
     });
 }
