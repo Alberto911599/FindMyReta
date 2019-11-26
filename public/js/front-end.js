@@ -287,32 +287,36 @@ function clickListeners(){
     
     $("#likeReta").on("click", function(e){
         e.preventDefault();
-        if(currentUser.likedRetas.indexOf(itemsId[index]) == -1){
+        let i = currentUser.likedRetas.indexOf(itemsId[index]);
+        if(i == -1){
             myNewReta.likes += 1;
             currentUser.likedRetas.push(itemsId[index]);
-            updateUsersLikedRetas(currentUser._id);
         }
         else{
             myNewReta.likes -=1; 
+            currentUser.likedRetas.splice(i, 1);
         }
         let temp = {likes : myNewReta.likes};
         updateReta(itemsId[index], temp, false);
         fillDetails(myNewReta);
+        updateUsersLikedRetas(currentUser._id);
     });
 
     $("#confirmAssistance").on("click", function(e){
         e.preventDefault();
-        if(currentUser.likedRetas.indexOf(itemsId[index]) == -1){
-            myNewReta.likes += 1;
-            currentUser.likedRetas.push(itemsId[index]);
-            updateUsersAssistRetas(currentUser._id);
+        let i = currentUser.assistRetas.indexOf(itemsId[index]);
+        if(i == -1){
+            myNewReta.assistants += 1;
+            currentUser.assistRetas.push(itemsId[index]);
         }
         else{
-            myNewReta.likes -=1; 
+            currentUser.assistRetas.splice(i, 1);
+            myNewReta.assistants -=1; 
         }
         let temp = {assistants : myNewReta.assistants};
         updateReta(itemsId[index], temp, false);
         fillDetails(myNewReta);
+        updateUsersAssistRetas(currentUser._id);
     });
 
     $("#listOfRetas").on("click", ".card-img-top", function(e){
