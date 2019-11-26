@@ -175,6 +175,7 @@ function getInputValues(){
     myNewReta.cost = $("#costInput").val();
     myNewReta.requisites = $("#requisitesInput").val();
     myNewReta.nowPlaying = $("#nowPlayingInput").is(':checked');
+    myNewReta.username = currentUser.username;
 }
 
 function isRelated(searchTerm, jsonCandidate){
@@ -215,7 +216,7 @@ function appendRetas(responseJSON, retasList, privileges){
                         <div class="card-footer" id="card-footer-${i}">
                             <small class="text-muted">${responseJSON[i].city}</small>
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="sw-${i}">
+                                <input type="checkbox" class="custom-control-input sw" id="sw-${i}">
                                 <label class="custom-control-label" for="sw-${i}">Currently Active</label>
                             </div>
                         </div>
@@ -324,6 +325,14 @@ function clickListeners(){
         fillDetails(myNewReta);
         updateUsersAssistRetas(currentUser._id);
     });
+
+    $(".sec").on("click", ".sw", function(e){
+        e.preventDefault();
+        let i = (e.target.id).substr(3);
+        hideSections();
+        updateState(itemsId[i], $("#sw-"+i).is(':checked'));
+    });
+
 
     $("#listOfRetas").on("click", ".card-img-top", function(e){
         e.preventDefault();
@@ -527,6 +536,22 @@ function updateUsersLikedRetas(tempId){
         contentType: "application/json; charset=utf-8",
         success : function(response){
             console.log("Success on adding liked retas to records");
+            console.log(response);
+        }
+    });
+}
+
+function updateState(tempId, state){
+    console.log("Updating state = " + state);
+    let fieldToUpd = { nowPlaying : state };
+    console.log("Updating liked retas of users id = " + tempId);
+    $.ajax({
+        url:(url + '/updateState/' + tempId), //url/endpointToAPI,
+        type: "PUT", 
+        data: JSON.stringify(fieldToUpd),
+        contentType: "application/json; charset=utf-8",
+        success : function(response){
+            console.log("Success on updating state");
             console.log(response);
         }
     });
