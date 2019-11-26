@@ -65,6 +65,20 @@ let PlaceList = {
 					throw Error( error );
 				});
     },
+
+    getTrending : function(){
+        console.log("Retas Trending");
+        return Place.find()
+                .limit(2)
+                .sort({likes : -1})
+				.then( places => {
+					return places;
+				})
+				.catch( error => {
+					throw Error( error );
+				});
+    },
+
     getRetaById : function(id){
         console.log("Getting retas by id");
         return Place.findById(id)

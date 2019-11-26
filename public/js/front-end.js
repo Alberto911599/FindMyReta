@@ -285,6 +285,13 @@ function clickListeners(){
         getFilteredRetas("currentlyActive");
     });
 
+    $("#filterTrendnig").on("click", function(e){
+        e.preventDefault();
+        hideSections();
+        $(".allRetasSection").show();
+        getFilteredRetas("trending");
+    });
+
     $("#filterMyCity").on("click", function(e){
         e.preventDefault();
         hideSections();
@@ -493,7 +500,7 @@ function getFilteredRetas(filter){
         dataType : "json", //Returned type od the response
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
-            console.log("Success on getting retas by city = " + responseJSON.length );
+            console.log("Success on getting retas by " + filter );
             appendRetas(responseJSON, $("#listOfRetas"), false);
         }, 
         error: function(err){
