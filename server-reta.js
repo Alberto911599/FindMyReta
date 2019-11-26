@@ -68,8 +68,11 @@ app.get('/api/allRetas/byCity/:city', ( req, res, next ) => {
 
 app.get('/api/allRetas/findById/:id', ( req, res, next ) => {
     console.log("Getting retas by id in server = ");
-    let filter = {_id : req.params.id};
-	PlaceList.getRetasById(filter)
+    let filter = req.params.id;
+    if(!filter){
+        return;
+    }
+	PlaceList.getRetaById(filter)
 		.then( retas => {
 			return res.status( 200 ).json( retas );
 		})
