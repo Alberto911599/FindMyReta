@@ -103,7 +103,7 @@ app.get('/api/allRetas/currentlyActive', ( req, res ) => {
 
 app.get('/api/allRetas/trending', ( req, res ) => {
     console.log("Getting trending");
-	PlaceList.getTrending(filter)
+	PlaceList.getTrending()
 		.then( retas => {
 			return res.status( 200 ).json( retas );
 		})
