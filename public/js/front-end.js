@@ -285,7 +285,7 @@ function clickListeners(){
         getFilteredRetas("currentlyActive");
     });
 
-    $("#filterTrendnig").on("click", function(e){
+    $("#filterTrending").on("click", function(e){
         e.preventDefault();
         hideSections();
         $(".allRetasSection").show();
