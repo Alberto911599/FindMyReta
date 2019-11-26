@@ -415,6 +415,7 @@ function getRetaById(filter){
         ContentType : "application/json", //Type of sent data in the request (optional)
         success : function(responseJSON){
             console.log("Success on getting retas by id = " + filter );
+            console.log("response is = " + responseJSON);
             fillDetails(responseJSON);
         }, 
         error: function(err){
