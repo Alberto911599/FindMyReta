@@ -193,7 +193,53 @@ app.get('/api/retasLogin/:username/:password', (req, res) => {
                 message : "Something went wrong with the DB. Try again later."
             })
         });
-})
+});
+
+app.put('/api/addLikedReta/:id', jsonParser, (req, res, next) => {
+    let filterID = req.params.id;
+    if(!filterID){
+        res.statusMessage = "Missing field id";
+        return res.status(406).json({
+           "error" : "Missing id",
+           "status" : 406
+       });
+    }
+    console.log(req.body);
+    UserList.put({ _id : filterID }, req.body)
+       .then(like => {
+           res.status(201).json(like);
+       })
+       .catch(err => {
+           res.statusMessage = "Missing field in body";
+           return res.status(500).json({
+               "error" : "Something went wrong with the data base",
+               "status" : 500
+           });
+       });
+});
+
+app.put('/api/addAssistReta/:id', jsonParser, (req, res, next) => {
+    let filterID = req.params.id;
+    if(!filterID){
+        res.statusMessage = "Missing field id";
+        return res.status(406).json({
+           "error" : "Missing id",
+           "status" : 406
+       });
+    }
+    console.log(req.body);
+    UserList.put({ _id : filterID }, req.body)
+       .then(assist => {
+           res.status(201).json(assist);
+       })
+       .catch(err => {
+           res.statusMessage = "Missing field in body";
+           return res.status(500).json({
+               "error" : "Something went wrong with the data base",
+               "status" : 500
+           });
+       });
+});
 
 
 let server;

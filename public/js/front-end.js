@@ -22,8 +22,12 @@ let myNewReta = {
 
 // user currently logged in
 let currentUser = {
+    _id : null,
     username : null, 
-    city : null
+    password : null,
+    city : null,
+    assistRetas : [],
+    likedRetas : []
 }
 
 let updatableFields = ["location", "name", "typeOfSports", "cost", "requisites", "nowPlaying", "imageURL"];
@@ -52,7 +56,7 @@ let numberOfCols = 4;
 
 // image downsize parameters
 let WIDTH = 350;
-let HEIGHT = 200;
+let HEIGHT = 250;
 let encoderOptions = 0.95;
 
 // google maps api autocomplete
@@ -283,7 +287,14 @@ function clickListeners(){
     
     $("#likeReta").on("click", function(e){
         e.preventDefault();
-        myNewReta.likes += 1;
+        if(currentUser.likedRetas.indexOf(itemsId[index]) == -1){
+            myNewReta.likes += 1;
+            currentUser.likedRetas.push(itemsId[index]);
+            updateUsersLikedRetas(currentUser._id);
+        }
+        else{
+            myNewReta.likes -=1; 
+        }
         let temp = {likes : myNewReta.likes};
         updateReta(itemsId[index], temp, false);
         fillDetails(myNewReta);
@@ -291,7 +302,14 @@ function clickListeners(){
 
     $("#confirmAssistance").on("click", function(e){
         e.preventDefault();
-        myNewReta.assistants += 1;
+        if(currentUser.likedRetas.indexOf(itemsId[index]) == -1){
+            myNewReta.likes += 1;
+            currentUser.likedRetas.push(itemsId[index]);
+            updateUsersAssistRetas(currentUser._id);
+        }
+        else{
+            myNewReta.likes -=1; 
+        }
         let temp = {assistants : myNewReta.assistants};
         updateReta(itemsId[index], temp, false);
         fillDetails(myNewReta);
@@ -472,8 +490,8 @@ function getUser(username, password){
             }
             else{
                 console.log("Login success");
-                myNewReta.username = currentUser.username = responseJSON.username;
-                currentUser.city = responseJSON.city;
+                currentUser._id = responseJSON._id;
+                currentUser = responseJSON;
                 hideSections();
                 $(".homeSection").show();
                 $(".allRetasSection").show();
@@ -484,6 +502,36 @@ function getUser(username, password){
         }, 
         error: function(err){
             console.log("error");
+        }
+    });
+}
+
+function updateUsersLikedRetas(tempId){
+    let fieldToUpd = { likedRetas : currentUser.likedRetas };
+    console.log("Updating liked retas of users id = " + tempId);
+    $.ajax({
+        url:(url + '/addLikedReta/' + tempId), //url/endpointToAPI,
+        type: "PUT", 
+        data: JSON.stringify(fieldToUpd),
+        contentType: "application/json; charset=utf-8",
+        success : function(response){
+            console.log("Success on adding liked retas to records");
+            console.log(response);
+        }
+    });
+}
+
+function updateUsersAssistRetas(tempId){
+    let fieldToUpd = { assistRetas : currentUser.assistRetas };
+    console.log("Updating liked retas of users id = " + tempId);
+    $.ajax({
+        url:(url + '/addLikedReta/' + tempId), //url/endpointToAPI,
+        type: "PUT", 
+        data: JSON.stringify(fieldToUpd),
+        contentType: "application/json; charset=utf-8",
+        success : function(response){
+            console.log("Success on adding liked retas to records");
+            console.log(response);
         }
     });
 }

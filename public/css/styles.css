@@ -9,7 +9,8 @@
 }  
 
 #detailsCard{
-    display: inline-block;  
+    display: inline-block; 
+    margin: auto; 
 }
 
 #bodyDetails{

@@ -20,7 +20,9 @@ let placeSchema = mongoose.Schema({
 let userSchema = mongoose.Schema({
     username : {type : String},
     password : {type : String},
-    city : {type : String}
+    city : {type : String},
+    assistRetas : [String],
+    likedtRetas : [String]
 });
 
 
@@ -38,7 +40,18 @@ let UserList = {
                 .catch( err=> {
                     throw Error(err);   
                 });
-    }
+    },
+    put : function(filer, updatedInfo){
+        console.log("User Put");
+        return User.updateOne(filer, updatedInfo)
+                .then( user => {
+                    console.log(user);
+                    return user;
+                })
+                .catch( err=> {
+                    throw Error(user);   
+                });
+            }
 }
 
 let PlaceList = {
